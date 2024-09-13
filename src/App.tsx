@@ -22,6 +22,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import preview from "./threee/scenes/preview";
 import render from "./threee/render/render";
 import { GridRender } from "./GridRender";
+import { SaveDialog } from "./SaveDialog";
 
 type tabType = "3d_view" | "cubemap_view";
 
@@ -178,7 +179,7 @@ function App() {
 						<input id="flat-button-file" type="file" onChange={onFileUpload} />
 					</div>
 
-					<Button>Save</Button>
+					<SaveDialog />
 				</div>
 			</div>
 		</>
