@@ -192,7 +192,7 @@ export function SaveDialog() {
 					{processed ? (
 						<Button
 							asChild
-							variant="secondary"
+							variant="default"
 							color="primary"
 							disabled={selected === 0 || saveDisable}
 							onClick={saveFiles}
@@ -205,7 +205,7 @@ export function SaveDialog() {
 						</Button>
 					) : (
 						<Button
-							variant="secondary"
+							variant="default"
 							disabled={selected === 0 || saveDisable}
 							onClick={proccessFiles}
 							// size="sm"
