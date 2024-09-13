@@ -29,7 +29,7 @@ import {
 } from "./threee/render/renderProc";
 import { CopyCodeButton } from "./components/CopyCode";
 
-export function SaveDialog() {
+export function SaveDialog({ className, ...props }: { className?: string }) {
 	const [selected, setSelected] = useState(0);
 	const [url, setUrl] = useState("");
 	const [download, setDownload] = useState("");
@@ -166,7 +166,12 @@ export function SaveDialog() {
 	return (
 		<Dialog>
 			<DialogTrigger asChild>
-				<Button variant="outline" size="sm" className="gap-1.5 text-sm">
+				<Button
+					// variant="outline"
+					// size="sm"
+					className={cn("gap-1.5 text-sm", className)}
+					{...props}
+				>
 					<Pencil className="size-3.5" />
 					Convert
 				</Button>

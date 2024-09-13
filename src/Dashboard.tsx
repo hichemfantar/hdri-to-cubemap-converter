@@ -252,36 +252,38 @@ export function Dashboard() {
 					<header className="sticky top-0 z-10 flex py-2 items-center gap-1 border-b bg-background px-4 flex-wrap justify-between">
 						<div>
 							<h1 className="text-xl font-semibold">
-								HDRI to Cubemap Converter
+								HDRI to Cubemap{" "}
+								<span className="hidden md:inline">Converter</span>{" "}
 							</h1>
 						</div>
 						<div className="flex items-center flex-wrap gap-1">
-							<Drawer>
-								<DrawerTrigger asChild>
-									<Button variant="ghost" size="icon" className="md:hidden">
-										<Settings className="size-4" />
-										<span className="sr-only">Settings</span>
-									</Button>
-								</DrawerTrigger>
-								<DrawerContent className="max-h-[80vh]">
-									<DrawerHeader>
-										<DrawerTitle>Configuration</DrawerTitle>
-										<DrawerDescription>
-											Configure the settings for the model and messages.
-										</DrawerDescription>
-									</DrawerHeader>
-									<form className="grid w-full items-start gap-6 overflow-auto p-4 pt-0">
-										<fieldset className="grid gap-6 rounded-lg border p-4">
-											<legend className="-ml-1 px-1 text-sm font-medium">
-												Settings
-											</legend>
-											<ImageInput />
+							{false && (
+								<Drawer>
+									<DrawerTrigger asChild>
+										<Button variant="ghost" size="icon" className="md:hidden">
+											<Settings className="size-4" />
+											<span className="sr-only">Settings</span>
+										</Button>
+									</DrawerTrigger>
+									<DrawerContent className="max-h-[80vh]">
+										<DrawerHeader>
+											<DrawerTitle>Configuration</DrawerTitle>
+											<DrawerDescription>
+												Configure the settings for the model and messages.
+											</DrawerDescription>
+										</DrawerHeader>
+										<form className="grid w-full items-start gap-6 overflow-auto p-4 pt-0">
+											<fieldset className="grid gap-6 rounded-lg border p-4">
+												<legend className="-ml-1 px-1 text-sm font-medium">
+													Settings
+												</legend>
+												<ImageInput />
 
-											<ColorSpaceInput />
+												<ColorSpaceInput />
 
-											<ExposureInput />
+												<ExposureInput />
 
-											{/* <div className="grid gap-3">
+												{/* <div className="grid gap-3">
 											<Label htmlFor="temperature">Temperature</Label>
 											<Input id="temperature" type="number" placeholder="0.4" />
 										</div>
@@ -293,10 +295,11 @@ export function Dashboard() {
 											<Label htmlFor="top-k">Top K</Label>
 											<Input id="top-k" type="number" placeholder="0.0" />
 										</div> */}
-										</fieldset>
-									</form>
-								</DrawerContent>
-							</Drawer>
+											</fieldset>
+										</form>
+									</DrawerContent>
+								</Drawer>
+							)}
 							{/* <Button
 							variant="outline"
 							size="sm"
@@ -305,9 +308,9 @@ export function Dashboard() {
 							<Share className="size-3.5" />
 							Share
 						</Button> */}
-							<div className="ml-auto">
+							{/* <div className="">
 								<SaveDialog />
-							</div>
+							</div> */}
 
 							<Button asChild variant="ghost" size={"icon"} color="primary">
 								<a
@@ -322,11 +325,8 @@ export function Dashboard() {
 							<ModeToggle />
 						</div>
 					</header>
-					<main className="grid flex-1 gap-4 overflow-auto p-4 md:grid-cols-2 lg:grid-cols-3">
-						<div
-							className="relative hidden flex-col items-start gap-8 md:flex"
-							x-chunk="dashboard-03-chunk-0"
-						>
+					<main className="grid md:flex-1 gap-4 overflow-auto p-4 md:grid-cols-2 lg:grid-cols-3">
+						<div className="xhidden flex-col items-start gap-8 md:flex">
 							<form className="grid w-full items-start gap-6">
 								<fieldset className="grid gap-6 rounded-lg border p-4">
 									<legend className="-ml-1 px-1 text-sm font-medium">
@@ -354,11 +354,14 @@ export function Dashboard() {
 											<Input id="top-k" type="number" placeholder="0.0" />
 										</div>
 									</div> */}
+
+									<SaveDialog className="w-full" />
 								</fieldset>
 							</form>
 						</div>
+
 						<div className="lg:col-span-2">
-							<div className="relative flex xh-full min-h-[50vh] flex-col rounded-xl bg-muted/50 p-4">
+							<div className="relative flex xh-full md:min-h-[50vh] flex-col rounded-xl bg-muted/50 p-4">
 								{/* <Badge variant="outline" className="absolute right-3 top-3">
 								Output
 							</Badge> */}
@@ -396,7 +399,6 @@ export function Dashboard() {
 								</div>
 								{/* <form
 									className="relative overflow-hidden rounded-lg border bg-background focus-within:ring-1 focus-within:ring-ring"
-									x-chunk="dashboard-03-chunk-1"
 								>
 									<Label htmlFor="message" className="sr-only">
 										Message
