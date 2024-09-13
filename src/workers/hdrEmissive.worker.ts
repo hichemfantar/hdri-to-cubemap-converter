@@ -11,8 +11,8 @@ export const hadrEmmisiveWorker = () => {
 			this.push = this.push.bind(this);
 		}
 		push(...bytes) {
-			for (let i = 0; i < arguments.length; i++) {
-				this.binaryData[this._cIndex] = arguments[i];
+			for (let i = 0; i < bytes.length; i++) {
+				this.binaryData[this._cIndex] = bytes[i];
 				this._cIndex++;
 			}
 		}
