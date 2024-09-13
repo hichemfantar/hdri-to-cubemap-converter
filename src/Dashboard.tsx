@@ -197,10 +197,7 @@ export function Dashboard() {
 					onValueChange={(v) => onColorSpaceChange(v as ColorSpace)}
 					value={colorSpace}
 				>
-					<SelectTrigger
-						id="model"
-						className="items-start [&_[data-description]]:hidden"
-					>
+					<SelectTrigger id="model">
 						<SelectValue placeholder="Select a color space" />
 					</SelectTrigger>
 					<SelectContent>
@@ -213,9 +210,7 @@ export function Dashboard() {
 							] as ColorSpace[]
 						).map((val) => (
 							<SelectItem key={val} value={val}>
-								<div className="flex items-start gap-3 text-muted-foreground">
-									<span>{val}</span>
-								</div>
+								{val}
 							</SelectItem>
 						))}
 					</SelectContent>
