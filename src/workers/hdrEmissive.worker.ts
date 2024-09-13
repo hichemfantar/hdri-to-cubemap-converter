@@ -1,5 +1,7 @@
 // @ts-nocheck
 
+import { MessageData } from "@/converters/hdrConverterEmissive";
+
 export const hadrEmmisiveWorker = () => {
 	// You can't push Uint8Array, so i made a class to do that
 	class ByteData {
@@ -15,7 +17,7 @@ export const hadrEmmisiveWorker = () => {
 			}
 		}
 	}
-	self.addEventListener("message", (event) => {
+	self.addEventListener("message", (event: MessageEvent<MessageData>) => {
 		const width = event.data.width;
 		const height = event.data.height;
 		const rgbeBuffer = event.data.rgbeBuffer;
