@@ -410,7 +410,7 @@ export function Dashboard() {
 								}
 								target="_blank"
 							>
-								<GitHubLogoIcon className={cn("")} />
+								<GitHubLogoIcon className={cn("w-5 h-5")} />
 							</a>
 						</Button>
 					</header>
