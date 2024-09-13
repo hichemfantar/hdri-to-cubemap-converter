@@ -75,6 +75,7 @@ const hdrToneMapping = (hdr = true) => {
 		renderProps.exposure = 1;
 	}
 };
+
 export {
 	mainScene,
 	mainCamera,

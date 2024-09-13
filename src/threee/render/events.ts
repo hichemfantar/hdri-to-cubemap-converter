@@ -2,6 +2,7 @@ import { resize } from "../components/base";
 import { resizeConv } from "../components/convert";
 import { cameraControl } from "../controls/cameraControl";
 import { convProps } from "../components/props";
+
 const customEvents = () => {
 	window.addEventListener("resize", () => {
 		resize();

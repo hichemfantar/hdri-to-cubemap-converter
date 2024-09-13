@@ -3,21 +3,16 @@ import {
 	Book,
 	Bot,
 	Code2,
-	CornerDownLeft,
 	LifeBuoy,
-	Mic,
-	Paperclip,
 	Rabbit,
 	Settings,
 	Settings2,
-	Share,
 	SquareTerminal,
 	SquareUser,
 	Triangle,
 	Turtle,
 } from "lucide-react";
 
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
 	Drawer,
@@ -36,7 +31,6 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
 import {
 	Tooltip,
 	TooltipContent,
@@ -44,8 +38,11 @@ import {
 	TooltipTrigger,
 } from "@/components/ui/tooltip";
 import React, { useEffect, useState } from "react";
+import { ModeToggle } from "./components/mode-toggle";
+import { Slider } from "./components/ui/slider";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./components/ui/tabs";
 import { GridRender } from "./GridRender";
+import { SaveDialog } from "./SaveDialog";
 import { hdrToneMapping, setExposure } from "./threee/components/base";
 import {
 	hdrToneMappingConv,
@@ -57,9 +54,8 @@ import { imageProps, renderProps } from "./threee/components/props";
 import render from "./threee/render/render";
 import preview from "./threee/scenes/preview";
 import { updateImage } from "./threee/textures/userTexture";
-import { Slider } from "./components/ui/slider";
-import { SaveDialog } from "./SaveDialog";
-import { ModeToggle } from "./components/mode-toggle";
+import { GitHubLogoIcon } from "@radix-ui/react-icons";
+import { cn } from "./lib/utils";
 
 type tabType = "3d_view" | "cubemap_view";
 
@@ -406,6 +402,17 @@ export function Dashboard() {
 						</div>
 
 						<ModeToggle />
+
+						<Button asChild variant="ghost" size={"icon"} color="primary">
+							<a
+								href={
+									"https://github.com/hichemfantar/hdri-to-cubemap-converter"
+								}
+								target="_blank"
+							>
+								<GitHubLogoIcon className={cn("")} />
+							</a>
+						</Button>
 					</header>
 					<main className="grid flex-1 gap-4 overflow-auto p-4 md:grid-cols-2 lg:grid-cols-3">
 						<div

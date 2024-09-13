@@ -1,15 +1,15 @@
 import {
-	PerspectiveCamera,
-	WebGLRenderer,
-	Vector3 as V3,
-	LinearToneMapping,
-	ReinhardToneMapping,
 	LinearSRGBColorSpace,
+	LinearToneMapping,
+	PerspectiveCamera,
+	ReinhardToneMapping,
+	Vector3 as V3,
+	WebGLRenderer,
 } from "three";
-import { mainCamera, mainScene } from "./base";
 import { updateMaterial } from "../materials/sphereMat";
-import { convProps, canvasProps, renderProps } from "./props";
 import { customEventsCanv } from "../render/events";
+import { mainCamera, mainScene } from "./base";
+import { convProps, renderProps } from "./props";
 
 const convCamera = new PerspectiveCamera(90, 1, 0.1, 5000);
 
@@ -22,6 +22,7 @@ let convRenderers: (WebGLRenderer | null)[] = [
 	null,
 	null,
 ];
+
 const updateConv = () => {
 	convRenderers = convRenderers.map((_r, i) => {
 		const canvas = document.getElementById(`convCanv${i}`);
@@ -73,7 +74,7 @@ function convertRemToPixels(rem: number) {
 const resizeConv = () => {
 	if (convProps.refs.length !== 0) {
 		const w = convertRemToPixels(8);
-		const segSize = Math.floor((window.innerWidth * canvasProps.vhw) / 3);
+		// const segSize = Math.floor((window.innerWidth * canvasProps.vhw) / 3);
 		// if (convProps.refs[0]) convProps.refs[0].style.top = `${segSize}px`;
 		// if (convProps.refs[1]) convProps.refs[1].style.top = `${segSize}px`;
 		// if (convProps.refs[1]) convProps.refs[1].style.left = `${segSize}px`;
@@ -127,11 +128,13 @@ const convRender = () => {
 		if (convRenderers[5]) convRenderers[5].render(mainScene, convCamera);
 	}
 };
+
 const setExposureConv = (val = renderProps.exposure) => {
 	convRenderers.map((renderer) => {
 		if (renderer) renderer.toneMappingExposure = val;
 	});
 };
+
 const hdrToneMappingConv = (hdr = true) => {
 	convProps.hdrToon = hdr;
 	if (hdr) {
@@ -153,8 +156,8 @@ const hdrToneMappingConv = (hdr = true) => {
 
 export {
 	convRender,
-	updateConv,
-	resizeConv,
 	hdrToneMappingConv,
+	resizeConv,
 	setExposureConv,
+	updateConv,
 };

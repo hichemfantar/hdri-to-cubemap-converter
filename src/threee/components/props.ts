@@ -9,4 +9,5 @@ const convProps: { refs: (HTMLElement | null)[]; hdrToon: boolean } = {
 	refs: [],
 	hdrToon: true,
 };
+
 export { canvasProps, renderProps, imageProps, convProps };

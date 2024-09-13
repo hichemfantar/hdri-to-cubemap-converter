@@ -3,6 +3,7 @@ import { customEvents } from "./events";
 import { renderProps } from "../components/props";
 import { tickAnimation } from "./tickAnimation";
 import { convRender } from "../components/convert";
+
 const render = () => {
 	console.log("Initial Rendering");
 
@@ -13,6 +14,7 @@ const render = () => {
 		requestAnimationFrame(eventTick);
 	}
 };
+
 const eventTick = () => {
 	tickAnimation();
 	renderer.render(mainScene, mainCamera);
@@ -21,4 +23,5 @@ const eventTick = () => {
 		requestAnimationFrame(eventTick);
 	}
 };
+
 export default render;

@@ -31,6 +31,7 @@ const calcAngle = () => {
 		return -angle;
 	}
 };
+
 const packBlobsSep = (callback = (href) => {}, progress = (prog) => {}) => {
 	const { names, blobs } = renderCatch;
 	renderCatch.packed = [false, false, false, false, false, false];
@@ -96,6 +97,7 @@ const storeBlobsSep = (
 		}
 	});
 };
+
 const hdrProcRenderSep = (
 	size = 64,
 	callback = (href) => {},
@@ -152,6 +154,7 @@ const hdrProcRenderSep = (
 
 	// packBlobs(callback);
 };
+
 const hdrProcRenderUnity = (
 	size = 64,
 	callback = (href) => {},
@@ -241,6 +244,7 @@ const hdrProcRenderUnity = (
 		}
 	);
 };
+
 const hdrProcRenderUE4 = (
 	size = 64,
 	callback = (href) => {},

@@ -10,7 +10,7 @@ import {
 	LinearSRGBColorSpace,
 } from "three";
 import { sphereMatHdr } from "../materials/sphereMat-hdr";
-// canvas is in .domElement
+
 const procRenderer = new WebGLRenderer();
 const hdrProcRenderer = new WebGLRenderer({ alpha: true });
 const hdrRenderTarget = new WebGLRenderTarget();

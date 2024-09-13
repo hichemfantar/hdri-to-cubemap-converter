@@ -8,7 +8,15 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from "@/components/ui/dialog";
+import { CogIcon, Pencil, SaveIcon } from "lucide-react";
 import { useState } from "react";
+import { CrossLayout } from "./components/saveDialogComp/CrossLayout";
+import { FormatSelect } from "./components/saveDialogComp/FormatSelect";
+import { LineLayout } from "./components/saveDialogComp/LineLayout";
+import { ResolutionSelect } from "./components/saveDialogComp/ResolutionSelect";
+import { SeperateLayout } from "./components/saveDialogComp/SeperateLayout";
+import { Progress } from "./components/ui/progress";
+import { cn } from "./lib/utils";
 import {
 	hdrProcRenderSep,
 	hdrProcRenderUE4,
@@ -19,13 +27,6 @@ import {
 	procRenderUE4,
 	procRenderUnity,
 } from "./threee/render/renderProc";
-import { Progress } from "./components/ui/progress";
-import { ResolutionSelect } from "./components/saveDialogComp/ResolutionSelect";
-import { FormatSelect } from "./components/saveDialogComp/FormatSelect";
-import { CrossLayout } from "./components/saveDialogComp/CrossLayout";
-import { LineLayout } from "./components/saveDialogComp/LineLayout";
-import { SeperateLayout } from "./components/saveDialogComp/SeperateLayout";
-import { Share } from "lucide-react";
 
 export function SaveDialog() {
 	const [selected, setSelected] = useState(0);
@@ -39,8 +40,6 @@ export function SaveDialog() {
 
 	const proccessFiles = () => {
 		console.log("saving files - index =", selected);
-		// console.dir(document.getElementById('SaveButton'))
-		// const myButton = document.getElementById('SaveButton')
 		setSaveDisable(true);
 
 		if (format === "hdr") {
@@ -139,8 +138,6 @@ export function SaveDialog() {
 	};
 
 	const saveFiles = () => {
-		// const myButton = document.getElementById('SaveButton')
-		// console.dir(myButton)
 		onClose();
 	};
 
@@ -169,7 +166,7 @@ export function SaveDialog() {
 		<Dialog>
 			<DialogTrigger asChild>
 				<Button variant="outline" size="sm" className="gap-1.5 text-sm">
-					<Share className="size-3.5" />
+					<Pencil className="size-3.5" />
 					Convert
 				</Button>
 			</DialogTrigger>
@@ -195,13 +192,14 @@ export function SaveDialog() {
 					{processed ? (
 						<Button
 							asChild
-							id={"SaveButton"}
 							variant="secondary"
 							color="primary"
 							disabled={selected === 0 || saveDisable}
 							onClick={saveFiles}
+							className="gap-1.5 text-sm"
 						>
 							<a href={url} download={download}>
+								<SaveIcon className={cn("size-3.5")} />
 								Save
 							</a>
 						</Button>
@@ -210,7 +208,12 @@ export function SaveDialog() {
 							variant="secondary"
 							disabled={selected === 0 || saveDisable}
 							onClick={proccessFiles}
+							// size="sm"
+							className="gap-1.5 text-sm"
 						>
+							<CogIcon
+								className={cn("size-3.5", saveDisable && "animate-spin")}
+							/>
 							Process
 						</Button>
 					)}
