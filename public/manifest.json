@@ -1,7 +1,7 @@
 {
 	"name": "HDRI to Cubemap Converter",
 	"short_name": "HDRI to Cubemap",
-	"description": "Convert yout HDRI files to Cubemaps instantly.",
+	"description": "Convert HDRIs to Cubemaps instantly.",
 	"icons": [
 		{
 			"src": "/icons/logo-192.png",
