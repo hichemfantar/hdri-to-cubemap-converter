@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 export const hadrEmmisiveWorker = () => {
 	// You can't push Uint8Array, so i made a class to do that
 	class ByteData {
@@ -7,7 +9,7 @@ export const hadrEmmisiveWorker = () => {
 			this.push = this.push.bind(this);
 		}
 		push(...bytes) {
-			for (var i = 0; i < arguments.length; i++) {
+			for (let i = 0; i < arguments.length; i++) {
 				this.binaryData[this._cIndex] = arguments[i];
 				this._cIndex++;
 			}
@@ -20,7 +22,7 @@ export const hadrEmmisiveWorker = () => {
 		const fromBottom = event.data.fromBottom;
 		// pixel data starts at lower left corner, but we are writing hdr from upper left one,
 		// this function gives me upper left pixel row based on y, where y = 0 -> top row
-		const topIndex = (y) =>
+		const topIndex = (y: number) =>
 			fromBottom
 				? width * height * 4 - width * 4 - width * y * 4
 				: width * y * 4;
@@ -30,7 +32,7 @@ export const hadrEmmisiveWorker = () => {
 			let localVal = 0,
 				localLength = 0;
 			const lengthConstant = 128;
-			for (var i = 0; i < width * 4; i += 4) {
+			for (let i = 0; i < width * 4; i += 4) {
 				if (localLength === 0) {
 					localVal = rgbeBuffer[topIndex(y) + i + channel];
 					localLength++;
@@ -51,7 +53,7 @@ export const hadrEmmisiveWorker = () => {
 
 		const compressed = [];
 		let fileSize = 0;
-		for (var i = 0; i < height; i++) {
+		for (let i = 0; i < height; i++) {
 			const lineReds = getLine(i, 0);
 			const lineGreens = getLine(i, 1);
 			const lineBlues = getLine(i, 2);
@@ -70,10 +72,10 @@ export const hadrEmmisiveWorker = () => {
 		const lineSize = new Uint8Array(new Uint16Array([width]).buffer);
 		const byteData = new ByteData(fileSize);
 
-		for (var i = 0; i < height; i++) {
+		for (let i = 0; i < height; i++) {
 			// Each line starts the same
 			byteData.push(2, 2, lineSize[1], lineSize[0]); //line iniciators // no idea why but linesize is flipped
-			for (var k = 0; k < 4; k++) {
+			for (let k = 0; k < 4; k++) {
 				compressed[i][k].map((channel) => {
 					byteData.push(channel.length, channel.value);
 				});

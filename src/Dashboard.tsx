@@ -436,7 +436,7 @@ export function Dashboard() {
 											aria-describedby="file_input_help"
 											id="file_input"
 											type="file"
-											accept="image/*"
+											accept="image/*, .hdr"
 											onChange={onFileUpload}
 										/>
 										<p
