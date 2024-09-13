@@ -1,5 +1,17 @@
+import { ColorSpace, LinearSRGBColorSpace } from "three";
+
 const canvasProps = { width: 1280, height: 720, vww: 0.64, vhw: 0.36 };
-const renderProps = { isRendering: false, exposure: 4, maxExposure: 12 };
+const renderProps: {
+	isRendering: boolean;
+	exposure: number;
+	maxExposure: number;
+	colorSpace: ColorSpace;
+} = {
+	isRendering: false,
+	exposure: 4,
+	maxExposure: 12,
+	colorSpace: LinearSRGBColorSpace,
+};
 const imageProps: {
 	loaded: boolean;
 	file: File | null;

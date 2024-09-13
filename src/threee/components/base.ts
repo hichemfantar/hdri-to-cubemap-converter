@@ -1,12 +1,13 @@
 import {
-	Scene,
-	PerspectiveCamera,
-	WebGLRenderer,
-	ReinhardToneMapping,
-	LinearToneMapping,
 	LinearSRGBColorSpace,
+	LinearToneMapping,
+	PerspectiveCamera,
+	ReinhardToneMapping,
+	Scene,
+	WebGLRenderer,
 } from "three";
 import { canvasProps, renderProps } from "./props";
+
 const { width, height } = canvasProps;
 
 const mainScene = new Scene();
@@ -64,6 +65,10 @@ const setExposure = (val = renderProps.exposure) => {
 	renderer.toneMappingExposure = val;
 };
 
+const setColorSpace = (val = renderProps.colorSpace) => {
+	renderer.outputColorSpace = val;
+};
+
 const hdrToneMapping = (hdr = true) => {
 	if (hdr) {
 		renderer.toneMapping = ReinhardToneMapping;
@@ -77,11 +82,12 @@ const hdrToneMapping = (hdr = true) => {
 };
 
 export {
-	mainScene,
-	mainCamera,
-	renderer,
-	update,
-	resize,
-	setExposure,
 	hdrToneMapping,
+	mainCamera,
+	mainScene,
+	renderer,
+	resize,
+	setColorSpace,
+	setExposure,
+	update,
 };

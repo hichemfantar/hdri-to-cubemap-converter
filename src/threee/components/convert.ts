@@ -135,6 +135,12 @@ const setExposureConv = (val = renderProps.exposure) => {
 	});
 };
 
+const setColorSpaceConv = (val = renderProps.colorSpace) => {
+	convRenderers.map((renderer) => {
+		if (renderer) renderer.outputColorSpace = val;
+	});
+};
+
 const hdrToneMappingConv = (hdr = true) => {
 	convProps.hdrToon = hdr;
 	if (hdr) {
@@ -160,4 +166,5 @@ export {
 	resizeConv,
 	setExposureConv,
 	updateConv,
+	setColorSpaceConv,
 };

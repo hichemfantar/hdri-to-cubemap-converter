@@ -1,13 +1,13 @@
 import {
-	WebGLRenderer,
+	LinearSRGBColorSpace,
+	LinearToneMapping,
+	Mesh,
 	PerspectiveCamera,
 	ReinhardToneMapping,
-	LinearToneMapping,
-	SphereGeometry,
-	Mesh,
 	Scene,
+	SphereGeometry,
+	WebGLRenderer,
 	WebGLRenderTarget,
-	LinearSRGBColorSpace,
 } from "three";
 import { sphereMatHdr } from "../materials/sphereMat-hdr";
 
@@ -39,10 +39,10 @@ const hdrToneMappingProc = (hdr = true) => {
 hdrToneMappingProc(true);
 
 export {
-	procRenderer,
 	hdrProcRenderer,
 	hdrRenderTarget,
 	hdrScene,
-	procCamera,
 	hdrToneMappingProc,
+	procCamera,
+	procRenderer,
 };

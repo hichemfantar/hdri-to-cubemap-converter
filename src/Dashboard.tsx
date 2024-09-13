@@ -43,9 +43,14 @@ import { Slider } from "./components/ui/slider";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./components/ui/tabs";
 import { GridRender } from "./GridRender";
 import { SaveDialog } from "./SaveDialog";
-import { hdrToneMapping, setExposure } from "./threee/components/base";
+import {
+	hdrToneMapping,
+	setColorSpace,
+	setExposure,
+} from "./threee/components/base";
 import {
 	hdrToneMappingConv,
+	setColorSpaceConv,
 	setExposureConv,
 	updateConv,
 } from "./threee/components/convert";
@@ -56,6 +61,7 @@ import preview from "./threee/scenes/preview";
 import { updateImage } from "./threee/textures/userTexture";
 import { GitHubLogoIcon } from "@radix-ui/react-icons";
 import { cn } from "./lib/utils";
+import { ColorSpace } from "three";
 
 type tabType = "3d_view" | "cubemap_view";
 
@@ -77,6 +83,7 @@ export function Dashboard() {
 	const [exposure, setExposureState] = useState(
 		(renderProps.exposure / renderProps.maxExposure) * 100
 	);
+	const [colorSpace, setColorSpaceState] = useState(renderProps.colorSpace);
 	const [activeTab, setActiveTab] = useState<tabType>("3d_view");
 	const handleTabChange = (value: tabType) => {
 		setActiveTab(value);
@@ -139,6 +146,14 @@ export function Dashboard() {
 		setExposure();
 		setExposureConv();
 	};
+
+	const onColorSpaceChange = (v: ColorSpace) => {
+		setColorSpaceState(v);
+		renderProps.colorSpace = v;
+		setColorSpace();
+		setColorSpaceConv();
+	};
+
 	// const onExposureChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 	// 	const val = parseInt(e.target.value);
 	// 	setExposureState(val);
@@ -164,6 +179,14 @@ export function Dashboard() {
 					onValueChange={onExposureChange}
 					className="w-full"
 				/>
+				{/* <input
+						type="range"
+						min="0"
+						max="100"
+						value={exposure}
+						onChange={onExposureChange}
+						className="w-full"
+					/> */}
 			</div>
 		);
 	}
@@ -431,8 +454,7 @@ export function Dashboard() {
 										>
 											Upload file
 										</label>
-										<input
-											className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+										<Input
 											aria-describedby="file_input_help"
 											id="file_input"
 											type="file"
@@ -448,72 +470,43 @@ export function Dashboard() {
 									</div>
 
 									<div className="grid gap-3">
-										<Label htmlFor="model">Model</Label>
-										<Select>
+										<Label htmlFor="model">Color Space</Label>
+										<Select
+											onValueChange={(v) => onColorSpaceChange(v as ColorSpace)}
+											value={colorSpace}
+										>
 											<SelectTrigger
 												id="model"
 												className="items-start [&_[data-description]]:hidden"
 											>
-												<SelectValue placeholder="Select a model" />
+												<SelectValue placeholder="Select a color space" />
 											</SelectTrigger>
 											<SelectContent>
-												<SelectItem value="genesis">
-													<div className="flex items-start gap-3 text-muted-foreground">
-														<Rabbit className="size-5" />
-														<div className="grid gap-0.5">
-															<p>
-																Neural{" "}
-																<span className="font-medium text-foreground">
-																	Genesis
-																</span>
-															</p>
-															<p className="text-xs" data-description>
-																Our fastest model for general use cases.
-															</p>
+												{(
+													[
+														"display-p3",
+														"display-p3-linear",
+														"srgb",
+														"srgb-linear",
+													] as ColorSpace[]
+												).map((val) => (
+													<SelectItem key={val} value={val}>
+														<div className="flex items-start gap-3 text-muted-foreground">
+															<span>{val}</span>
 														</div>
-													</div>
-												</SelectItem>
-												<SelectItem value="explorer">
-													<div className="flex items-start gap-3 text-muted-foreground">
-														<Bird className="size-5" />
-														<div className="grid gap-0.5">
-															<p>
-																Neural{" "}
-																<span className="font-medium text-foreground">
-																	Explorer
-																</span>
-															</p>
-															<p className="text-xs" data-description>
-																Performance and speed for efficiency.
-															</p>
-														</div>
-													</div>
-												</SelectItem>
-												<SelectItem value="quantum">
-													<div className="flex items-start gap-3 text-muted-foreground">
-														<Turtle className="size-5" />
-														<div className="grid gap-0.5">
-															<p>
-																Neural{" "}
-																<span className="font-medium text-foreground">
-																	Quantum
-																</span>
-															</p>
-															<p className="text-xs" data-description>
-																The most powerful model for complex
-																computations.
-															</p>
-														</div>
-													</div>
-												</SelectItem>
+													</SelectItem>
+												))}
 											</SelectContent>
 										</Select>
 									</div>
+
 									<ExposureInput />
+
 									<div className="grid gap-3">
 										<Label htmlFor="temperature">Temperature</Label>
 										<Input id="temperature" type="number" placeholder="0.4" />
 									</div>
+
 									<div className="grid grid-cols-2 gap-4">
 										<div className="grid gap-3">
 											<Label htmlFor="top-p">Top P</Label>
