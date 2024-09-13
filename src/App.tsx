@@ -87,8 +87,8 @@ function App() {
 		}
 	};
 
-	const onExposureChange = (v: number) => {
-		const val = v;
+	const onExposureChange = (v: number[]) => {
+		const val = v[0];
 		setExposureState(val);
 		renderProps.exposure = parseFloat(
 			(val * (renderProps.maxExposure / 100)).toFixed(2)
@@ -168,11 +168,11 @@ function App() {
 						Exposure = {(exposure * (renderProps.maxExposure / 100)).toFixed(2)}
 					</div>
 					<Slider
-						defaultValue={[exposure]}
+						value={[exposure]}
 						min={0}
 						max={100}
 						step={1}
-						onValueCommit={onExposureChange}
+						onValueChange={onExposureChange}
 						className="w-full"
 					/>
 
