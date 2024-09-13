@@ -1,16 +1,13 @@
 import {
-	Bird,
 	Book,
 	Bot,
 	Code2,
 	LifeBuoy,
-	Rabbit,
 	Settings,
 	Settings2,
 	SquareTerminal,
 	SquareUser,
 	Triangle,
-	Turtle,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -37,11 +34,14 @@ import {
 	TooltipProvider,
 	TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { GitHubLogoIcon } from "@radix-ui/react-icons";
 import React, { useEffect, useState } from "react";
+import { ColorSpace } from "three";
 import { ModeToggle } from "./components/mode-toggle";
 import { Slider } from "./components/ui/slider";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./components/ui/tabs";
 import { GridRender } from "./GridRender";
+import { cn } from "./lib/utils";
 import { SaveDialog } from "./SaveDialog";
 import {
 	hdrToneMapping,
@@ -59,9 +59,6 @@ import { imageProps, renderProps } from "./threee/components/props";
 import render from "./threee/render/render";
 import preview from "./threee/scenes/preview";
 import { updateImage } from "./threee/textures/userTexture";
-import { GitHubLogoIcon } from "@radix-ui/react-icons";
-import { cn } from "./lib/utils";
-import { ColorSpace } from "three";
 
 type tabType = "3d_view" | "cubemap_view";
 
@@ -191,7 +188,8 @@ export function Dashboard() {
 			</div>
 		);
 	}
-	function ImageInput() {
+
+	function ColorSpaceInput() {
 		return (
 			<div className="grid gap-3">
 				<Label htmlFor="model">Color Space (preview only)</Label>
@@ -226,6 +224,31 @@ export function Dashboard() {
 		);
 	}
 
+	function ImageInput() {
+		return (
+			<div>
+				<label
+					className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+					htmlFor="file_input"
+				>
+					Upload file
+				</label>
+				<Input
+					aria-describedby="file_input_help"
+					id="file_input"
+					type="file"
+					accept="image/*, .hdr"
+					onChange={onFileUpload}
+				/>
+				<p
+					className="mt-1 text-sm text-gray-500 dark:text-gray-300"
+					id="file_input_help"
+				>
+					Accepted files: Images
+				</p>
+			</div>
+		);
+	}
 	return (
 		<TooltipProvider>
 			<div className="mx-auto container grid h-screen w-full xpl-[53px]">
@@ -252,68 +275,9 @@ export function Dashboard() {
 										<legend className="-ml-1 px-1 text-sm font-medium">
 											Settings
 										</legend>
-										<div className="grid gap-3">
-											<Label htmlFor="model">Model</Label>
-											<Select>
-												<SelectTrigger
-													id="model"
-													className="items-start [&_[data-description]]:hidden"
-												>
-													<SelectValue placeholder="Select a model" />
-												</SelectTrigger>
-												<SelectContent>
-													<SelectItem value="genesis">
-														<div className="flex items-start gap-3 text-muted-foreground">
-															<Rabbit className="size-5" />
-															<div className="grid gap-0.5">
-																<p>
-																	Neural{" "}
-																	<span className="font-medium text-foreground">
-																		Genesis
-																	</span>
-																</p>
-																<p className="text-xs" data-description>
-																	Our fastest model for general use cases.
-																</p>
-															</div>
-														</div>
-													</SelectItem>
-													<SelectItem value="explorer">
-														<div className="flex items-start gap-3 text-muted-foreground">
-															<Bird className="size-5" />
-															<div className="grid gap-0.5">
-																<p>
-																	Neural{" "}
-																	<span className="font-medium text-foreground">
-																		Explorer
-																	</span>
-																</p>
-																<p className="text-xs" data-description>
-																	Performance and speed for efficiency.
-																</p>
-															</div>
-														</div>
-													</SelectItem>
-													<SelectItem value="quantum">
-														<div className="flex items-start gap-3 text-muted-foreground">
-															<Turtle className="size-5" />
-															<div className="grid gap-0.5">
-																<p>
-																	Neural{" "}
-																	<span className="font-medium text-foreground">
-																		Quantum
-																	</span>
-																</p>
-																<p className="text-xs" data-description>
-																	The most powerful model for complex
-																	computations.
-																</p>
-															</div>
-														</div>
-													</SelectItem>
-												</SelectContent>
-											</Select>
-										</div>
+										<ImageInput />
+
+										<ColorSpaceInput />
 
 										<ExposureInput />
 
@@ -367,29 +331,10 @@ export function Dashboard() {
 									<legend className="-ml-1 px-1 text-sm font-medium">
 										Settings
 									</legend>
-									<div>
-										<label
-											className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-											htmlFor="file_input"
-										>
-											Upload file
-										</label>
-										<Input
-											aria-describedby="file_input_help"
-											id="file_input"
-											type="file"
-											accept="image/*, .hdr"
-											onChange={onFileUpload}
-										/>
-										<p
-											className="mt-1 text-sm text-gray-500 dark:text-gray-300"
-											id="file_input_help"
-										>
-											Accepted files: Images
-										</p>
-									</div>
 
 									<ImageInput />
+
+									<ColorSpaceInput />
 
 									<ExposureInput />
 
