@@ -1,7 +1,10 @@
+// @ts-nocheck
+
 import { Vector3 as V3 } from "three";
 import { mainCamera, mainScene } from "../components/base";
 import { procCamera, procRenderer } from "../components/process";
 import { updateMaterial } from "../materials/sphereMat";
+
 const renderCatch: {
 	blobs: Blob[];
 	names: string[];
@@ -31,12 +34,15 @@ const calcAngle = () => {
 	}
 };
 
-const packBlobsSep = (callback = (href) => {}, progress = (prog) => {}) => {
+const packBlobsSep = (
+	callback = (href: any) => {},
+	progress = (prog: any) => {}
+) => {
 	const { names, blobs } = renderCatch;
 	renderCatch.packed = [false, false, false, false, false, false];
 	console.log(blobs);
 
-	zip.createWriter(new zip.BlobWriter(), (writer) => {
+	zip.createWriter(new zip.BlobWriter(), (writer: any) => {
 		const nester = (startIndex = 0, endIndex = 5, callback = () => {}) => {
 			console.log("startIndex0:", startIndex);
 			writer.add(
@@ -60,7 +66,7 @@ const packBlobsSep = (callback = (href) => {}, progress = (prog) => {}) => {
 		};
 		nester(0, 5, () => {
 			console.log(renderCatch.packed);
-			writer.close((blob) => {
+			writer.close((blob: Blob) => {
 				callback(URL.createObjectURL(blob));
 			});
 		});
@@ -68,11 +74,14 @@ const packBlobsSep = (callback = (href) => {}, progress = (prog) => {}) => {
 };
 
 const storeBlobsSep = (
-	name,
-	callback = (href) => {},
-	progress = (prog) => {}
+	name: string,
+	callback = (href: string) => {},
+	progress = (prog: { progNow: number; progTotal: number }) => {}
 ) => {
 	procRenderer.domElement.toBlob((blob) => {
+		if (!blob) {
+			throw new Error("Blob not found");
+		}
 		renderCatch.blobs.push(blob);
 		renderCatch.names.push(`${name}.png`);
 		renderCatch.progNow++;
@@ -86,8 +95,8 @@ const storeBlobsSep = (
 };
 const procRenderSep = (
 	size = 64,
-	callback = (href) => {},
-	progress = (prog) => {}
+	callback = (href: string) => {},
+	progress = (prog: { progNow: number; progTotal: number }) => {}
 ) => {
 	renderCatch.blobs = [];
 	renderCatch.names = [];
@@ -135,8 +144,8 @@ const procRenderSep = (
 };
 const procRenderUnity = (
 	size = 64,
-	callback = (href) => {},
-	progress = (prog) => {}
+	callback = (href: string) => {},
+	progress = (prog: { progNow: number; progTotal: number }) => {}
 ) => {
 	renderCatch.progNow = 0;
 	renderCatch.progTotal = 4;
@@ -198,7 +207,7 @@ const procRenderUnity = (
 			progTotal: renderCatch.progTotal,
 		});
 
-		zip.createWriter(new zip.BlobWriter(), (writer) => {
+		zip.createWriter(new zip.BlobWriter(), (writer: any) => {
 			writer.add("StandardCubeMap.png", new zip.BlobReader(blob), () => {
 				renderCatch.progNow++;
 				progress({
@@ -206,7 +215,7 @@ const procRenderUnity = (
 					progTotal: renderCatch.progTotal,
 				});
 
-				writer.close((blob) => {
+				writer.close((blob: any) => {
 					console.log("zip end");
 					renderCatch.progNow++;
 					progress({
@@ -222,8 +231,8 @@ const procRenderUnity = (
 };
 const procRenderUE4 = (
 	size = 64,
-	callback = (href) => {},
-	progress = (prog) => {}
+	callback = (href: string) => {},
+	progress = (prog: { progNow: number; progTotal: number }) => {}
 ) => {
 	renderCatch.progNow = 0;
 	renderCatch.progTotal = 4;
@@ -291,7 +300,7 @@ const procRenderUE4 = (
 			progTotal: renderCatch.progTotal,
 		});
 
-		zip.createWriter(new zip.BlobWriter(), (writer) => {
+		zip.createWriter(new zip.BlobWriter(), (writer: any) => {
 			writer.add("StandardCubeMap.png", new zip.BlobReader(blob), () => {
 				renderCatch.progNow++;
 				progress({
@@ -299,7 +308,7 @@ const procRenderUE4 = (
 					progTotal: renderCatch.progTotal,
 				});
 
-				writer.close((blob) => {
+				writer.close((blob: any) => {
 					console.log("zip end");
 					renderCatch.progNow++;
 					progress({

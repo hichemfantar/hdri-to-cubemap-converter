@@ -1,7 +1,9 @@
+import { Card, CardContent } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import React, { useEffect, useState } from "react";
-import { TypographyH1, TypographyH2 } from "./components/typography";
 import { Button } from "./components/ui/button";
-import { updateImage } from "./threee/textures/userTexture";
+import { GridRender } from "./GridRender";
+import { SaveDialog } from "./SaveDialog";
 import { hdrToneMapping, setExposure } from "./threee/components/base";
 import {
 	hdrToneMappingConv,
@@ -10,19 +12,9 @@ import {
 } from "./threee/components/convert";
 import { hdrToneMappingProc } from "./threee/components/process";
 import { imageProps, renderProps } from "./threee/components/props";
-import {
-	Card,
-	CardContent,
-	CardDescription,
-	CardFooter,
-	CardHeader,
-	CardTitle,
-} from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import preview from "./threee/scenes/preview";
 import render from "./threee/render/render";
-import { GridRender } from "./GridRender";
-import { SaveDialog } from "./SaveDialog";
+import preview from "./threee/scenes/preview";
+import { updateImage } from "./threee/textures/userTexture";
 
 type tabType = "3d_view" | "cubemap_view";
 
@@ -36,6 +28,8 @@ function App() {
 
 	const [cubeUpdated, setCubeUpdated] = useState(false);
 	const [showCanvas, setShowCanvas] = useState(false);
+	console.log(showCanvas);
+
 	const [exposure, setExposureState] = useState(
 		(renderProps.exposure / renderProps.maxExposure) * 100
 	);

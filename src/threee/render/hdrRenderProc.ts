@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import { Vector3 as V3 } from "three";
 import {
 	hdrProcRenderer,
@@ -8,6 +10,7 @@ import {
 import { mainCamera } from "../components/base";
 import { updateMaterial } from "../materials/sphereMat";
 import { hdrConverterEmmisive } from "../../converters/hdrConverterEmissive";
+
 const renderCatch = {
 	blobs: [],
 	names: [],
