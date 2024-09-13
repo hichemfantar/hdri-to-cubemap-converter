@@ -21,6 +21,12 @@ import {
 	procRenderUE4,
 	procRenderUnity,
 } from "./threee/render/renderProc";
+import { Progress } from "./components/ui/progress";
+import { ResolutionSelect } from "./components/saveDialogComp/ResolutionSelect";
+import { FormatSelect } from "./components/saveDialogComp/FormatSelect";
+import { CrossLayout } from "./components/saveDialogComp/CrossLayout";
+import { LineLayout } from "./components/saveDialogComp/LineLayout";
+import { SeperateLayout } from "./components/saveDialogComp/SeperateLayout";
 
 export function SaveDialog() {
 	const [selected, setSelected] = useState(0);
@@ -148,8 +154,12 @@ export function SaveDialog() {
 			setSelected(index);
 		};
 
-	const onSelectChange = (name) => (event) => {
-		this.setState({ [name]: event.target.value });
+	const onResolutionChange = () => (event) => {
+		setResolution(event.target.value);
+	};
+
+	const onFormatChange = () => (event) => {
+		setFormat(event.target.value);
 	};
 
 	const onClose = () => {
@@ -173,21 +183,44 @@ export function SaveDialog() {
 					<DialogDescription>3 layouts available.</DialogDescription>
 				</DialogHeader>
 				<div className="grid gap-4 py-4">
-					<div className="grid grid-cols-4 items-center gap-4">
-						<Label htmlFor="name" className="text-right">
-							Name
-						</Label>
-						<Input id="name" value="Pedro Duarte" className="col-span-3" />
+					<div style={{ display: "flex" }}>
+						<ResolutionSelect
+							onChange={onResolutionChange()}
+							value={resolution}
+						/>
+						<FormatSelect onChange={onFormatChange()} value={format} />
 					</div>
-					<div className="grid grid-cols-4 items-center gap-4">
-						<Label htmlFor="username" className="text-right">
-							Username
-						</Label>
-						<Input id="username" value="@peduarte" className="col-span-3" />
-					</div>
+					<CrossLayout selected={selected} onClick={handleSelect(1)} />
+					<LineLayout selected={selected} onClick={handleSelect(2)} />
+					<SeperateLayout selected={selected} onClick={handleSelect(3)} />
 				</div>
 				<DialogFooter>
-					<Button type="submit">Save changes</Button>
+					<Progress value={progress} />
+
+					{processed ? (
+						<Button
+							asChild
+							id={"SaveButton"}
+							variant="secondary"
+							color="primary"
+							disabled={selected === 0 || saveDisable}
+							onClick={saveFiles}
+						>
+							<a href={url} download={download}>
+								Save
+							</a>
+						</Button>
+					) : (
+						<Button
+							variant="secondary"
+							disabled={selected === 0 || saveDisable}
+							onClick={proccessFiles()}
+						>
+							Process
+						</Button>
+					)}
+
+					{/* <Button type="submit">Save changes</Button> */}
 				</DialogFooter>
 			</DialogContent>
 		</Dialog>
