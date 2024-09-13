@@ -31,7 +31,6 @@ export function SaveDialog() {
 	const [url, setUrl] = useState("");
 	const [download, setDownload] = useState("");
 	const [processed, setProcessed] = useState(false);
-	const [processing, setProcessing] = useState(true);
 	const [progress, setProgress] = useState(0);
 	const [saveDisable, setSaveDisable] = useState(false);
 	const [resolution, setResolution] = useState(256);
