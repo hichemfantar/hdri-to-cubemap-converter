@@ -8,8 +8,6 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { useState } from "react";
 import {
 	hdrProcRenderSep,
@@ -39,9 +37,8 @@ export function SaveDialog() {
 	const [resolution, setResolution] = useState(256);
 	const [format, setFormat] = useState("png");
 
-	const proccessFiles = () => (event) => {
+	const proccessFiles = () => {
 		console.log("saving files - index =", selected);
-		console.log(event.handler);
 		// console.dir(document.getElementById('SaveButton'))
 		// const myButton = document.getElementById('SaveButton')
 		setSaveDisable(true);
@@ -147,19 +144,17 @@ export function SaveDialog() {
 		onClose();
 	};
 
-	const handleSelect =
-		(index = 0) =>
-		(event) => {
-			console.log("works", index);
-			setSelected(index);
-		};
-
-	const onResolutionChange = () => (event) => {
-		setResolution(event.target.value);
+	const handleSelect = (index: number) => {
+		console.log("works", index);
+		setSelected(index);
 	};
 
-	const onFormatChange = () => (event) => {
-		setFormat(event.target.value);
+	const onResolutionChange = (value: string) => {
+		setResolution(parseInt(value));
+	};
+
+	const onFormatChange = (value: string) => {
+		setFormat(value);
 	};
 
 	const onClose = () => {
@@ -177,22 +172,22 @@ export function SaveDialog() {
 			<DialogTrigger asChild>
 				<Button variant="outline">Save</Button>
 			</DialogTrigger>
-			<DialogContent className="sm:max-w-[425px]">
+			<DialogContent className="sm:max-w-[700px]">
 				<DialogHeader>
 					<DialogTitle>Chose Your Layout</DialogTitle>
 					<DialogDescription>3 layouts available.</DialogDescription>
 				</DialogHeader>
 				<div className="grid gap-4 py-4">
-					<div style={{ display: "flex" }}>
+					<div className="flex gap-4 items-center">
 						<ResolutionSelect
-							onChange={onResolutionChange()}
+							onChange={(e) => onResolutionChange(e)}
 							value={resolution}
 						/>
-						<FormatSelect onChange={onFormatChange()} value={format} />
+						<FormatSelect onChange={(e) => onFormatChange(e)} value={format} />
 					</div>
-					<CrossLayout selected={selected} onClick={handleSelect(1)} />
-					<LineLayout selected={selected} onClick={handleSelect(2)} />
-					<SeperateLayout selected={selected} onClick={handleSelect(3)} />
+					<CrossLayout selected={selected} onClick={() => handleSelect(1)} />
+					<LineLayout selected={selected} onClick={() => handleSelect(2)} />
+					<SeperateLayout selected={selected} onClick={() => handleSelect(3)} />
 				</div>
 				<DialogFooter>
 					<Progress value={progress} />
@@ -214,7 +209,7 @@ export function SaveDialog() {
 						<Button
 							variant="secondary"
 							disabled={selected === 0 || saveDisable}
-							onClick={proccessFiles()}
+							onClick={proccessFiles}
 						>
 							Process
 						</Button>

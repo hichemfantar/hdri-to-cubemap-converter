@@ -1,23 +1,34 @@
 import { Label } from "../ui/label";
-import { Select, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from "../ui/select";
 
 const options = ["png", "hdr"];
 
-const FormatSelect = (props) => {
-	const { classes, onChange, value } = props;
+const FormatSelect = (props: {
+	onChange: (value: string) => void;
+	value: string;
+}) => {
+	const { onChange, value } = props;
 	return (
-		<div className={classes.formControl}>
-			<Label htmlFor="format-label">Format</Label>
+		<div className={"min-w-32"}>
+			<Label htmlFor="format">Format</Label>
 			<Select value={value} onValueChange={onChange}>
-				<SelectTrigger id="format-label" className="w-[180px]" name="format">
+				<SelectTrigger id="format" className="w-[180px]" name="format">
 					<SelectValue placeholder="Select a format" />
 				</SelectTrigger>
 
-				{options.map((option) => (
-					<SelectItem key={option} value={option}>
-						{option}
-					</SelectItem>
-				))}
+				<SelectContent>
+					{options.map((option) => (
+						<SelectItem key={option} value={option}>
+							{option}
+						</SelectItem>
+					))}
+				</SelectContent>
 			</Select>
 		</div>
 	);
