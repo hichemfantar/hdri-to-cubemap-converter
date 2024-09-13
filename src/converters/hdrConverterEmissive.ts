@@ -1,12 +1,13 @@
 import { hadrEmmisiveWorker } from "../workers/hdrEmissive.worker";
+
 export const hdrConverterEmmisive = (
-	width,
-	height,
+	width: number,
+	height: number,
 	rgbeBuffer = new Uint8Array(),
 	fromBottom = true
 ) => {
-	return new Promise((resolve, reject) => {
-		var blobURL = URL.createObjectURL(
+	return new Promise((resolve) => {
+		const blobURL = URL.createObjectURL(
 			new Blob(["(", hadrEmmisiveWorker.toString(), ")()"], {
 				type: "application/javascript",
 			})
