@@ -24,5 +24,3 @@ dist-ssr
 *.sw?
 
 *.tsbuildinfo
-tsconfig.app.tsbuildinfo
-tsconfig.node.tsbuildinfo
