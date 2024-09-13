@@ -15,6 +15,7 @@ import { imageProps, renderProps } from "./threee/components/props";
 import render from "./threee/render/render";
 import preview from "./threee/scenes/preview";
 import { updateImage } from "./threee/textures/userTexture";
+import { Slider } from "./components/ui/slider";
 
 type tabType = "3d_view" | "cubemap_view";
 
@@ -86,8 +87,8 @@ function App() {
 		}
 	};
 
-	const onExposureChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const val = parseInt(e.target.value);
+	const onExposureChange = (v: number) => {
+		const val = v;
 		setExposureState(val);
 		renderProps.exposure = parseFloat(
 			(val * (renderProps.maxExposure / 100)).toFixed(2)
@@ -95,6 +96,15 @@ function App() {
 		setExposure();
 		setExposureConv();
 	};
+	// const onExposureChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+	// 	const val = parseInt(e.target.value);
+	// 	setExposureState(val);
+	// 	renderProps.exposure = parseFloat(
+	// 		(val * (renderProps.maxExposure / 100)).toFixed(2)
+	// 	);
+	// 	setExposure();
+	// 	setExposureConv();
+	// };
 
 	return (
 		<>
@@ -157,14 +167,23 @@ function App() {
 					<div style={{ textAlign: "center", fontSize: 13, fontWeight: 550 }}>
 						Exposure = {(exposure * (renderProps.maxExposure / 100)).toFixed(2)}
 					</div>
-					<input
+					<Slider
+						defaultValue={[exposure]}
+						min={0}
+						max={100}
+						step={1}
+						onValueCommit={onExposureChange}
+						className="w-full"
+					/>
+
+					{/* <input
 						type="range"
 						min="0"
 						max="100"
 						value={exposure}
 						onChange={onExposureChange}
 						className="w-full"
-					/>
+					/> */}
 				</div>
 
 				<div className="flex justify-between items-center">
