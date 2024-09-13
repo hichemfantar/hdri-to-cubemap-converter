@@ -7,6 +7,7 @@ import {
 	Mesh,
 	Scene,
 	WebGLRenderTarget,
+	LinearSRGBColorSpace,
 } from "three";
 import { sphereMatHdr } from "../materials/sphereMat-hdr";
 // canvas is in .domElement
@@ -25,6 +26,7 @@ hdrSphereMesh.position.set(0, 0, 0);
 hdrScene.add(hdrSphereMesh);
 
 const hdrToneMappingProc = (hdr = true) => {
+	procRenderer.outputColorSpace = LinearSRGBColorSpace;
 	if (hdr) {
 		procRenderer.toneMapping = ReinhardToneMapping;
 		procRenderer.toneMappingExposure = 4;

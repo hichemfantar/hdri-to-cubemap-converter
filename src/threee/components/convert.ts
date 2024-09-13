@@ -4,6 +4,7 @@ import {
 	Vector3 as V3,
 	LinearToneMapping,
 	ReinhardToneMapping,
+	LinearSRGBColorSpace,
 } from "three";
 import { mainCamera, mainScene } from "./base";
 import { updateMaterial } from "../materials/sphereMat";
@@ -48,6 +49,7 @@ const updateConv = () => {
 			if (renderer) {
 				renderer.toneMapping = ReinhardToneMapping;
 				renderer.toneMappingExposure = 4;
+				renderer.outputColorSpace = LinearSRGBColorSpace;
 			}
 		});
 	} else {
@@ -55,6 +57,7 @@ const updateConv = () => {
 			if (renderer) {
 				renderer.toneMapping = LinearToneMapping;
 				renderer.toneMappingExposure = 1;
+				renderer.outputColorSpace = LinearSRGBColorSpace;
 			}
 		});
 	}

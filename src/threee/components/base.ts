@@ -4,6 +4,7 @@ import {
 	WebGLRenderer,
 	ReinhardToneMapping,
 	LinearToneMapping,
+	LinearSRGBColorSpace,
 } from "three";
 import { canvasProps, renderProps } from "./props";
 const { width, height } = canvasProps;
@@ -28,6 +29,7 @@ const update = () => {
 	renderer = new WebGLRenderer({ canvas, antialias: true });
 	renderer.toneMapping = ReinhardToneMapping;
 	renderer.toneMappingExposure = renderProps.exposure;
+	renderer.outputColorSpace = LinearSRGBColorSpace;
 	resize();
 	renderer.setPixelRatio(2);
 };
