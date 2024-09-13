@@ -6,8 +6,8 @@ const CrossLayout = (props: { selected: number; onClick: () => void }) => {
 	return (
 		<Card
 			className={cn(
-				"w-full bg-[#444] hover:bg-[#bbb] hover:cursor-pointer",
-				selected === 1 && "bg-[#bbbbff] hover:bg-[#bbbbff]"
+				"w-full bg-primary-foreground hover:bg-secondary hover:cursor-pointer transition border-2 border-transparent",
+				selected === 1 && "border-primary"
 			)}
 			onClick={onClick}
 		>

@@ -14,8 +14,9 @@ const FormatSelect = (props: {
 	value: string;
 }) => {
 	const { onChange, value } = props;
+
 	return (
-		<div className={"min-w-32"}>
+		<div className="grid gap-2">
 			<Label htmlFor="format">Format</Label>
 			<Select value={value} onValueChange={onChange}>
 				<SelectTrigger id="format" className="w-[180px]" name="format">

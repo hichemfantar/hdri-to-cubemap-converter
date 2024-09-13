@@ -25,6 +25,7 @@ import { FormatSelect } from "./components/saveDialogComp/FormatSelect";
 import { CrossLayout } from "./components/saveDialogComp/CrossLayout";
 import { LineLayout } from "./components/saveDialogComp/LineLayout";
 import { SeperateLayout } from "./components/saveDialogComp/SeperateLayout";
+import { Share } from "lucide-react";
 
 export function SaveDialog() {
 	const [selected, setSelected] = useState(0);
@@ -167,7 +168,10 @@ export function SaveDialog() {
 	return (
 		<Dialog>
 			<DialogTrigger asChild>
-				<Button variant="outline">Save</Button>
+				<Button variant="outline" size="sm" className="gap-1.5 text-sm">
+					<Share className="size-3.5" />
+					Convert
+				</Button>
 			</DialogTrigger>
 			<DialogContent className="sm:max-w-[700px]">
 				<DialogHeader>
@@ -186,9 +190,8 @@ export function SaveDialog() {
 					<LineLayout selected={selected} onClick={() => handleSelect(2)} />
 					<SeperateLayout selected={selected} onClick={() => handleSelect(3)} />
 				</div>
+				<Progress value={progress} />
 				<DialogFooter>
-					<Progress value={progress} />
-
 					{processed ? (
 						<Button
 							asChild

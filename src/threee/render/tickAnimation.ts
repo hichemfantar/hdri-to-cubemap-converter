@@ -1,4 +1,4 @@
-import cameraControl from "../controls/cameraControl";
+import { cameraControl } from "../controls/cameraControl";
 
 function tickAnimation() {
 	cameraControl.update();

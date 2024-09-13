@@ -3,11 +3,13 @@ import { mainCamera } from "../components/base";
 
 const cameraControl = new OrbitControls(mainCamera);
 mainCamera.position.set(0, 0, 1);
-cameraControl.enablePan = false;
+cameraControl.autoRotate = true;
+cameraControl.enablePan = true;
 cameraControl.enableDamping = true;
 cameraControl.dampingFactor = 0.1;
 cameraControl.rotateSpeed = 0.035;
+cameraControl.enableZoom = true;
 cameraControl.enabled = false;
 cameraControl.update();
 
-export default cameraControl;
+export { cameraControl };

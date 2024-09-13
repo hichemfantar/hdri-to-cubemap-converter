@@ -6,8 +6,8 @@ const SeperateLayout = (props: { selected: number; onClick: () => void }) => {
 	return (
 		<Card
 			className={cn(
-				"mt-4 w-full bg-[#444] hover:bg-[#bbb] hover:cursor-pointer",
-				selected === 3 && "bg-[#bbbbff] hover:bg-[#bbbbff]"
+				"w-full bg-primary-foreground hover:bg-secondary hover:cursor-pointer transition border-2 border-transparent",
+				selected === 3 && "border-primary"
 			)}
 			onClick={onClick}
 		>

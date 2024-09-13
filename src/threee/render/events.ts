@@ -1,6 +1,6 @@
 import { resize } from "../components/base";
 import { resizeConv } from "../components/convert";
-import cameraControl from "../controls/cameraControl";
+import { cameraControl } from "../controls/cameraControl";
 import { convProps } from "../components/props";
 const customEvents = () => {
 	window.addEventListener("resize", () => {
@@ -17,10 +17,15 @@ const customEvents = () => {
 		);
 
 	canvas.addEventListener("mouseover", () => {
+		console.log("MouseOver");
+
 		cameraControl.enabled = true;
+		cameraControl.update();
 	});
 	canvas.addEventListener("mouseout", () => {
+		console.log("MouseOut");
 		cameraControl.enabled = false;
+		cameraControl.update();
 	});
 };
 

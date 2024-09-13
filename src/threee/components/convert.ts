@@ -43,7 +43,7 @@ const updateConv = () => {
 		);
 	}
 
-	convProps.refs.push(convCanv);
+	// convProps.refs.push(convCanv);
 	if (convProps.hdrToon) {
 		convRenderers.map((renderer) => {
 			if (renderer) {
@@ -65,31 +65,37 @@ const updateConv = () => {
 	resizeConv();
 	customEventsCanv();
 };
+
+function convertRemToPixels(rem: number) {
+	return rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
+}
+
 const resizeConv = () => {
-	console.log("resize!");
 	if (convProps.refs.length !== 0) {
+		const w = convertRemToPixels(8);
 		const segSize = Math.floor((window.innerWidth * canvasProps.vhw) / 3);
-		if (convProps.refs[0]) convProps.refs[0].style.top = `${segSize}px`;
-		if (convProps.refs[1]) convProps.refs[1].style.top = `${segSize}px`;
-		if (convProps.refs[1]) convProps.refs[1].style.left = `${segSize}px`;
-		if (convProps.refs[2]) convProps.refs[2].style.top = `${segSize}px`;
-		if (convProps.refs[2]) convProps.refs[2].style.left = `${segSize * 2}px`;
-		if (convProps.refs[3]) convProps.refs[3].style.top = `${segSize}px`;
-		if (convProps.refs[3]) convProps.refs[3].style.left = `${segSize * 3}px`;
-		if (convProps.refs[4]) convProps.refs[4].style.left = `${segSize}px`;
-		if (convProps.refs[5]) convProps.refs[5].style.top = `${segSize * 2}px`;
-		if (convProps.refs[5]) convProps.refs[5].style.left = `${segSize}px`;
-		// thats a container of canvases
-		if (convProps.refs[6]) convProps.refs[6].style.width = `${segSize * 4}px`;
-		if (convProps.refs[6]) convProps.refs[6].style.height = `${segSize * 3}px`;
+		// if (convProps.refs[0]) convProps.refs[0].style.top = `${segSize}px`;
+		// if (convProps.refs[1]) convProps.refs[1].style.top = `${segSize}px`;
+		// if (convProps.refs[1]) convProps.refs[1].style.left = `${segSize}px`;
+		// if (convProps.refs[2]) convProps.refs[2].style.top = `${segSize}px`;
+		// if (convProps.refs[2]) convProps.refs[2].style.left = `${segSize * 2}px`;
+		// if (convProps.refs[3]) convProps.refs[3].style.top = `${segSize}px`;
+		// if (convProps.refs[3]) convProps.refs[3].style.left = `${segSize * 3}px`;
+		// if (convProps.refs[4]) convProps.refs[4].style.left = `${segSize}px`;
+		// if (convProps.refs[5]) convProps.refs[5].style.top = `${segSize * 2}px`;
+		// if (convProps.refs[5]) convProps.refs[5].style.left = `${segSize}px`;
+		// // thats a container of canvases
+		// if (convProps.refs[6]) convProps.refs[6].style.width = `${segSize * 4}px`;
+		// if (convProps.refs[6]) convProps.refs[6].style.height = `${segSize * 3}px`;
 
 		convRenderers.map((renderer) => {
 			if (renderer) {
-				renderer.setSize(segSize, segSize);
+				renderer.setSize(w, w);
 			}
 		});
 	}
 };
+
 const convRender = () => {
 	if (convRenderers[0]) {
 		convCamera.rotation.set(0, 0, 0);

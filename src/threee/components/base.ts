@@ -33,15 +33,37 @@ const update = () => {
 	resize();
 	renderer.setPixelRatio(2);
 };
+
 const resize = () => {
+	const canvas = document.getElementById("MainCanvas");
+
+	if (!(canvas instanceof HTMLCanvasElement))
+		throw new Error(
+			`Expected canvasiFrameID to be an HTMLCanvasElement, was ${
+				(canvas && canvas.constructor && canvas.constructor.name) || canvas
+			}`
+		);
+
+	const parent = canvas.parentElement;
+	if (!parent) {
+		alert("Parent not found");
+		return;
+	}
+
 	renderer.setSize(
-		window.innerWidth * canvasProps.vww,
-		window.innerWidth * canvasProps.vhw
+		canvas.parentElement.clientWidth,
+		(canvas.parentElement.clientWidth * 9) / 16
 	);
+	// renderer.setSize(
+	// 	window.innerWidth * canvasProps.vww,
+	// 	window.innerWidth * canvasProps.vhw
+	// );
 };
+
 const setExposure = (val = renderProps.exposure) => {
 	renderer.toneMappingExposure = val;
 };
+
 const hdrToneMapping = (hdr = true) => {
 	if (hdr) {
 		renderer.toneMapping = ReinhardToneMapping;

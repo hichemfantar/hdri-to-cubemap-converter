@@ -14,9 +14,10 @@ const ResolutionSelect = (props: {
 	value: number;
 }) => {
 	const { onChange, value } = props;
+
 	return (
-		<div className={"min-w-32"}>
-			<Label htmlFor="resolution">Piece resolution</Label>
+		<div className="grid gap-2">
+			<Label htmlFor="resolution">Face Resolution</Label>
 			<Select value={value.toString()} onValueChange={onChange}>
 				<SelectTrigger id="resolution" name="resolution" className="w-[180px]">
 					<SelectValue placeholder="Select a resolution" />

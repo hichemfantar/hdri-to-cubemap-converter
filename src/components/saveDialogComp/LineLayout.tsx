@@ -6,8 +6,8 @@ const LineLayout = (props: { selected: number; onClick: () => void }) => {
 	return (
 		<Card
 			className={cn(
-				"mt-4 w-full bg-[#444] hover:bg-[#bbb] hover:cursor-pointer",
-				selected === 2 && "bg-[#bbbbff] hover:bg-[#bbbbff]"
+				"w-full bg-primary-foreground hover:bg-secondary hover:cursor-pointer transition border-2 border-transparent",
+				selected === 2 && "border-primary"
 			)}
 			onClick={onClick}
 		>
