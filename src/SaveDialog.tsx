@@ -158,8 +158,6 @@ export function SaveDialog() {
 	};
 
 	const onClose = () => {
-		onClose();
-
 		setUrl("");
 		setDownload("");
 		setProcessed(false);
