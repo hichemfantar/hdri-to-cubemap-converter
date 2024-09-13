@@ -14,7 +14,7 @@ import { CrossLayout } from "./components/saveDialogComp/CrossLayout";
 import { FormatSelect } from "./components/saveDialogComp/FormatSelect";
 import { LineLayout } from "./components/saveDialogComp/LineLayout";
 import { ResolutionSelect } from "./components/saveDialogComp/ResolutionSelect";
-import { SeperateLayout } from "./components/saveDialogComp/SeperateLayout";
+import { SeparateLayout } from "./components/saveDialogComp/SeparateLayout";
 import { Progress } from "./components/ui/progress";
 import { cn } from "./lib/utils";
 import {
@@ -27,6 +27,7 @@ import {
 	procRenderUE4,
 	procRenderUnity,
 } from "./threee/render/renderProc";
+import { CopyCodeButton } from "./components/CopyCode";
 
 export function SaveDialog() {
 	const [selected, setSelected] = useState(0);
@@ -173,7 +174,9 @@ export function SaveDialog() {
 			<DialogContent className="sm:max-w-[700px]">
 				<DialogHeader>
 					<DialogTitle>Chose Your Layout</DialogTitle>
-					<DialogDescription>3 layouts available.</DialogDescription>
+					<DialogDescription>
+						There are 3 layouts available (Cross, Line, and Separate).
+					</DialogDescription>
 				</DialogHeader>
 				<div className="grid gap-4 py-4">
 					<div className="flex gap-4 items-center">
@@ -185,10 +188,12 @@ export function SaveDialog() {
 					</div>
 					<CrossLayout selected={selected} onClick={() => handleSelect(1)} />
 					<LineLayout selected={selected} onClick={() => handleSelect(2)} />
-					<SeperateLayout selected={selected} onClick={() => handleSelect(3)} />
+					<SeparateLayout selected={selected} onClick={() => handleSelect(3)} />
 				</div>
 				<Progress value={progress} />
 				<DialogFooter>
+					<CopyCodeButton variant={"outline"} />
+
 					{processed ? (
 						<Button
 							asChild

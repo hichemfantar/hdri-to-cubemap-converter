@@ -249,34 +249,39 @@ export function Dashboard() {
 			<div className="mx-auto container grid h-screen w-full xpl-[53px]">
 				{/* <Aside /> */}
 				<div className="flex flex-col">
-					<header className="sticky top-0 z-10 flex py-2 items-center gap-1 border-b bg-background px-4 flex-wrap">
-						<h1 className="text-xl font-semibold">HDRI to Cubemap Converter</h1>
-						<Drawer>
-							<DrawerTrigger asChild>
-								<Button variant="ghost" size="icon" className="md:hidden">
-									<Settings className="size-4" />
-									<span className="sr-only">Settings</span>
-								</Button>
-							</DrawerTrigger>
-							<DrawerContent className="max-h-[80vh]">
-								<DrawerHeader>
-									<DrawerTitle>Configuration</DrawerTitle>
-									<DrawerDescription>
-										Configure the settings for the model and messages.
-									</DrawerDescription>
-								</DrawerHeader>
-								<form className="grid w-full items-start gap-6 overflow-auto p-4 pt-0">
-									<fieldset className="grid gap-6 rounded-lg border p-4">
-										<legend className="-ml-1 px-1 text-sm font-medium">
-											Settings
-										</legend>
-										<ImageInput />
+					<header className="sticky top-0 z-10 flex py-2 items-center gap-1 border-b bg-background px-4 flex-wrap justify-between">
+						<div>
+							<h1 className="text-xl font-semibold">
+								HDRI to Cubemap Converter
+							</h1>
+						</div>
+						<div className="flex items-center flex-wrap gap-1">
+							<Drawer>
+								<DrawerTrigger asChild>
+									<Button variant="ghost" size="icon" className="md:hidden">
+										<Settings className="size-4" />
+										<span className="sr-only">Settings</span>
+									</Button>
+								</DrawerTrigger>
+								<DrawerContent className="max-h-[80vh]">
+									<DrawerHeader>
+										<DrawerTitle>Configuration</DrawerTitle>
+										<DrawerDescription>
+											Configure the settings for the model and messages.
+										</DrawerDescription>
+									</DrawerHeader>
+									<form className="grid w-full items-start gap-6 overflow-auto p-4 pt-0">
+										<fieldset className="grid gap-6 rounded-lg border p-4">
+											<legend className="-ml-1 px-1 text-sm font-medium">
+												Settings
+											</legend>
+											<ImageInput />
 
-										<ColorSpaceInput />
+											<ColorSpaceInput />
 
-										<ExposureInput />
+											<ExposureInput />
 
-										{/* <div className="grid gap-3">
+											{/* <div className="grid gap-3">
 											<Label htmlFor="temperature">Temperature</Label>
 											<Input id="temperature" type="number" placeholder="0.4" />
 										</div>
@@ -288,11 +293,11 @@ export function Dashboard() {
 											<Label htmlFor="top-k">Top K</Label>
 											<Input id="top-k" type="number" placeholder="0.0" />
 										</div> */}
-									</fieldset>
-								</form>
-							</DrawerContent>
-						</Drawer>
-						{/* <Button
+										</fieldset>
+									</form>
+								</DrawerContent>
+							</Drawer>
+							{/* <Button
 							variant="outline"
 							size="sm"
 							className="ml-auto gap-1.5 text-sm"
@@ -300,21 +305,22 @@ export function Dashboard() {
 							<Share className="size-3.5" />
 							Share
 						</Button> */}
-						<div className="ml-auto">
-							<SaveDialog />
-						</div>
+							<div className="ml-auto">
+								<SaveDialog />
+							</div>
 
-						<Button asChild variant="ghost" size={"icon"} color="primary">
-							<a
-								href={
-									"https://github.com/hichemfantar/hdri-to-cubemap-converter"
-								}
-								target="_blank"
-							>
-								<GitHubLogoIcon className={cn("w-5 h-5")} />
-							</a>
-						</Button>
-						<ModeToggle />
+							<Button asChild variant="ghost" size={"icon"} color="primary">
+								<a
+									href={
+										"https://github.com/hichemfantar/hdri-to-cubemap-converter"
+									}
+									target="_blank"
+								>
+									<GitHubLogoIcon className={cn("w-5 h-5")} />
+								</a>
+							</Button>
+							<ModeToggle />
+						</div>
 					</header>
 					<main className="grid flex-1 gap-4 overflow-auto p-4 md:grid-cols-2 lg:grid-cols-3">
 						<div

@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 import { Card } from "../ui/card";
 
-const SeperateLayout = (props: { selected: number; onClick: () => void }) => {
+const SeparateLayout = (props: { selected: number; onClick: () => void }) => {
 	const { selected, onClick } = props;
 	return (
 		<Card
@@ -23,4 +23,4 @@ const SeperateLayout = (props: { selected: number; onClick: () => void }) => {
 	);
 };
 
-export { SeperateLayout };
+export { SeparateLayout };
