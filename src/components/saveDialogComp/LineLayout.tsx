@@ -14,23 +14,23 @@ const LineLayout = (props: { selected: number; onClick: () => void }) => {
 		>
 			<div className="flex justify-center items-center p-4">
 				<img
-					className="h-14 w-14 md:h-16 md:w-16"
+					className="h-12 w-12 md:h-16 md:w-16"
 					src={"images/xp.png"}
 					style={{ transform: "rotate(-90deg)" }}
 				/>
 				<img
-					className="h-14 w-14 md:h-16 md:w-16"
+					className="h-12 w-12 md:h-16 md:w-16"
 					src={"images/xn.png"}
 					style={{ transform: "rotate(90deg)" }}
 				/>
 				<img
-					className="h-14 w-14 md:h-16 md:w-16"
+					className="h-12 w-12 md:h-16 md:w-16"
 					src={"images/yp.png"}
 					style={{ transform: "rotate(180deg)" }}
 				/>
-				<img className="h-14 w-14 md:h-16 md:w-16" src={"images/yn.png"} />
-				<img className="h-14 w-14 md:h-16 md:w-16" src={"images/zp.png"} />
-				<img className="h-14 w-14 md:h-16 md:w-16" src={"images/zn.png"} />
+				<img className="h-12 w-12 md:h-16 md:w-16" src={"images/yn.png"} />
+				<img className="h-12 w-12 md:h-16 md:w-16" src={"images/zp.png"} />
+				<img className="h-12 w-12 md:h-16 md:w-16" src={"images/zn.png"} />
 			</div>
 		</Card>
 	);
