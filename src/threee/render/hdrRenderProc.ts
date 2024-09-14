@@ -11,7 +11,15 @@ import { mainCamera } from "../components/base";
 import { updateMaterial } from "../materials/sphereMat";
 import { hdrConverterEmmisive } from "../../converters/hdrConverterEmissive";
 
-const renderCatch = {
+const renderCatch: {
+	blobs: Blob[];
+	names: string[];
+	packed: boolean[];
+	zipping: boolean;
+	progNow: number;
+	progTotal: number;
+	canvas: HTMLCanvasElement;
+} = {
 	blobs: [],
 	names: [],
 	packed: [],
@@ -75,7 +83,7 @@ const storeBlobsSep = (
 ) => {
 	const width = hdrRenderTarget.width;
 	const height = hdrRenderTarget.height;
-	const rgbeBuffer = new Uint8Array(width * height * 4);
+	const rgbeBuffer = new Uint8ClampedArray(width * height * 4);
 	hdrProcRenderer.readRenderTargetPixels(
 		hdrRenderTarget,
 		0,
@@ -85,7 +93,11 @@ const storeBlobsSep = (
 		rgbeBuffer
 	);
 	console.log("PixelDataTest", rgbeBuffer);
-	hdrConverterEmmisive(width, height, rgbeBuffer).then((blob) => {
+	hdrConverterEmmisive({
+		width: width,
+		height: height,
+		rgbeBuffer: rgbeBuffer,
+	}).then((blob) => {
 		renderCatch.blobs.push(blob);
 		renderCatch.names.push(`${name}.hdr`);
 		renderCatch.progNow++;
@@ -118,38 +130,68 @@ const hdrProcRenderSep = (
 	updateMaterial();
 	procCamera.rotateY(-Math.PI / 2);
 	hdrProcRenderer.render(hdrScene, procCamera);
-	hdrProcRenderer.render(hdrScene, procCamera, hdrRenderTarget);
+
+	// hdrProcRenderer.render(hdrScene, procCamera, hdrRenderTarget);
+	hdrProcRenderer.setRenderTarget(hdrRenderTarget);
+	hdrProcRenderer.clear();
+	hdrProcRenderer.render(hdrScene, procCamera);
+
 	storeBlobsSep("px", callback, progress);
 	//-x
 	updateMaterial();
 	procCamera.rotateY(Math.PI);
 	hdrProcRenderer.render(hdrScene, procCamera);
-	hdrProcRenderer.render(hdrScene, procCamera, hdrRenderTarget);
+
+	// hdrProcRenderer.render(hdrScene, procCamera, hdrRenderTarget);
+	hdrProcRenderer.setRenderTarget(hdrRenderTarget);
+	hdrProcRenderer.clear();
+	hdrProcRenderer.render(hdrScene, procCamera);
+
 	storeBlobsSep("nx", callback, progress);
 	//+y
 	updateMaterial();
 	procCamera.rotateY(-Math.PI / 2);
 	procCamera.rotateX(Math.PI / 2);
 	hdrProcRenderer.render(hdrScene, procCamera);
-	hdrProcRenderer.render(hdrScene, procCamera, hdrRenderTarget);
+
+	// hdrProcRenderer.render(hdrScene, procCamera, hdrRenderTarget);
+	hdrProcRenderer.setRenderTarget(hdrRenderTarget);
+	hdrProcRenderer.clear();
+	hdrProcRenderer.render(hdrScene, procCamera);
+
 	storeBlobsSep("py", callback, progress);
 	//-y
 	updateMaterial();
 	procCamera.rotateX(-Math.PI);
 	hdrProcRenderer.render(hdrScene, procCamera);
-	hdrProcRenderer.render(hdrScene, procCamera, hdrRenderTarget);
+
+	// hdrProcRenderer.render(hdrScene, procCamera, hdrRenderTarget);
+	hdrProcRenderer.setRenderTarget(hdrRenderTarget);
+	hdrProcRenderer.clear();
+	hdrProcRenderer.render(hdrScene, procCamera);
+
 	storeBlobsSep("ny", callback, progress);
 	//+z
 	updateMaterial();
 	procCamera.rotateX(Math.PI / 2);
 	hdrProcRenderer.render(hdrScene, procCamera);
-	hdrProcRenderer.render(hdrScene, procCamera, hdrRenderTarget);
+
+	// hdrProcRenderer.render(hdrScene, procCamera, hdrRenderTarget);
+	hdrProcRenderer.setRenderTarget(hdrRenderTarget);
+	hdrProcRenderer.clear();
+	hdrProcRenderer.render(hdrScene, procCamera);
+
 	storeBlobsSep("pz", callback, progress);
 	//-z
 	updateMaterial();
 	procCamera.rotateY(Math.PI);
 	hdrProcRenderer.render(hdrScene, procCamera);
-	hdrProcRenderer.render(hdrScene, procCamera, hdrRenderTarget);
+
+	// hdrProcRenderer.render(hdrScene, procCamera, hdrRenderTarget);
+	hdrProcRenderer.setRenderTarget(hdrRenderTarget);
+	hdrProcRenderer.clear();
+	hdrProcRenderer.render(hdrScene, procCamera);
+
 	storeBlobsSep("nz", callback, progress);
 
 	// packBlobs(callback);
@@ -212,37 +254,40 @@ const hdrProcRenderUnity = (
 
 	const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
 
-	hdrConverterEmmisive(canvas.width, canvas.height, imageData.data, false).then(
-		(blob) => {
-			console.log("blob created");
-			renderCatch.progNow++;
-			progress({
-				progNow: renderCatch.progNow,
-				progTotal: renderCatch.progTotal,
-			});
+	hdrConverterEmmisive({
+		width: canvas.width,
+		height: canvas.height,
+		rgbeBuffer: imageData.data,
+		fromBottom: false,
+	}).then((blob) => {
+		console.log("blob created");
+		renderCatch.progNow++;
+		progress({
+			progNow: renderCatch.progNow,
+			progTotal: renderCatch.progTotal,
+		});
 
-			zip.createWriter(new zip.BlobWriter(), (writer) => {
-				writer.add("StandardCubeMap.hdr", new zip.BlobReader(blob), () => {
+		zip.createWriter(new zip.BlobWriter(), (writer) => {
+			writer.add("StandardCubeMap.hdr", new zip.BlobReader(blob), () => {
+				renderCatch.progNow++;
+				progress({
+					progNow: renderCatch.progNow,
+					progTotal: renderCatch.progTotal,
+				});
+
+				writer.close((blob) => {
+					console.log("zip end");
 					renderCatch.progNow++;
 					progress({
 						progNow: renderCatch.progNow,
 						progTotal: renderCatch.progTotal,
 					});
 
-					writer.close((blob) => {
-						console.log("zip end");
-						renderCatch.progNow++;
-						progress({
-							progNow: renderCatch.progNow,
-							progTotal: renderCatch.progTotal,
-						});
-
-						callback(URL.createObjectURL(blob));
-					});
+					callback(URL.createObjectURL(blob));
 				});
 			});
-		}
-	);
+		});
+	});
 };
 
 const hdrProcRenderUE4 = (
@@ -309,37 +354,40 @@ const hdrProcRenderUE4 = (
 
 	const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
 	console.log("zip start");
-	hdrConverterEmmisive(canvas.width, canvas.height, imageData.data, false).then(
-		(blob) => {
-			console.log("blob created");
-			renderCatch.progNow++;
-			progress({
-				progNow: renderCatch.progNow,
-				progTotal: renderCatch.progTotal,
-			});
+	hdrConverterEmmisive({
+		width: canvas.width,
+		height: canvas.height,
+		rgbeBuffer: imageData.data,
+		fromBottom: false,
+	}).then((blob) => {
+		console.log("blob created");
+		renderCatch.progNow++;
+		progress({
+			progNow: renderCatch.progNow,
+			progTotal: renderCatch.progTotal,
+		});
 
-			zip.createWriter(new zip.BlobWriter(), (writer) => {
-				writer.add("StandardCubeMap.hdr", new zip.BlobReader(blob), () => {
+		zip.createWriter(new zip.BlobWriter(), (writer) => {
+			writer.add("StandardCubeMap.hdr", new zip.BlobReader(blob), () => {
+				renderCatch.progNow++;
+				progress({
+					progNow: renderCatch.progNow,
+					progTotal: renderCatch.progTotal,
+				});
+
+				writer.close((blob) => {
+					console.log("zip end");
 					renderCatch.progNow++;
 					progress({
 						progNow: renderCatch.progNow,
 						progTotal: renderCatch.progTotal,
 					});
 
-					writer.close((blob) => {
-						console.log("zip end");
-						renderCatch.progNow++;
-						progress({
-							progNow: renderCatch.progNow,
-							progTotal: renderCatch.progTotal,
-						});
-
-						callback(URL.createObjectURL(blob));
-					});
+					callback(URL.createObjectURL(blob));
 				});
 			});
-		}
-	);
+		});
+	});
 
 	// console.log('zip start')
 	// canvas.toBlob(blob => {

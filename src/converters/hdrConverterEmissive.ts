@@ -3,14 +3,14 @@ import { hadrEmmisiveWorker } from "../workers/hdrEmissive.worker";
 export type MessageData = {
 	width: number;
 	height: number;
-	rgbeBuffer: Uint8Array;
-	fromBottom: boolean;
+	rgbeBuffer?: Uint8ClampedArray;
+	fromBottom?: boolean;
 };
 
 export const hdrConverterEmmisive = ({
 	width,
 	height,
-	rgbeBuffer = new Uint8Array(),
+	rgbeBuffer = new Uint8ClampedArray(),
 	fromBottom = true,
 }: MessageData) => {
 	return new Promise((resolve) => {
