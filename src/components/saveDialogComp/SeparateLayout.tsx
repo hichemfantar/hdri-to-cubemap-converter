@@ -11,7 +11,7 @@ const SeparateLayout = (props: { selected: number; onClick: () => void }) => {
 			)}
 			onClick={onClick}
 		>
-			<div className="flex justify-center items-center p-4 gap-4">
+			<div className="flex justify-center items-center p-4 gap-3 md:gap-4">
 				<img className="h-10 w-10 md:h-16 md:w-16" src={"images/xp.png"} />
 				<img className="h-10 w-10 md:h-16 md:w-16" src={"images/xn.png"} />
 				<img className="h-10 w-10 md:h-16 md:w-16" src={"images/yp.png"} />
