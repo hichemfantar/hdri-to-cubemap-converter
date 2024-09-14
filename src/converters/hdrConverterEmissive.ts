@@ -3,8 +3,8 @@ import { hadrEmmisiveWorker } from "../workers/hdrEmissive.worker";
 export type MessageData = {
 	width: number;
 	height: number;
-	rgbeBuffer?: Uint8ClampedArray;
-	fromBottom?: boolean;
+	rgbeBuffer: Uint8ClampedArray;
+	fromBottom: boolean;
 };
 
 export const hdrConverterEmmisive = ({
@@ -12,7 +12,8 @@ export const hdrConverterEmmisive = ({
 	height,
 	rgbeBuffer = new Uint8ClampedArray(),
 	fromBottom = true,
-}: MessageData) => {
+}: Partial<Pick<MessageData, "rgbeBuffer" | "fromBottom">> &
+	Omit<MessageData, "rgbeBuffer" | "fromBottom">) => {
 	return new Promise((resolve) => {
 		const blobURL = URL.createObjectURL(
 			new Blob(["(", hadrEmmisiveWorker.toString(), ")()"], {
