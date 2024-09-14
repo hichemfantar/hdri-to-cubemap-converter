@@ -13,6 +13,12 @@ const LineLayout = (props: { selected: number; onClick: () => void }) => {
 			onClick={onClick}
 		>
 			<div className="flex justify-center items-center p-4">
+				{/* <div
+					className="bg-red-800 h-12 w-12 md:h-16 md:w-16 flex justify-center items-center text-white xfont-bold"
+					style={{ transform: "rotate(-90deg)" }}
+				>
+					+X
+				</div> */}
 				<img
 					className="h-12 w-12 md:h-16 md:w-16"
 					src={"images/xp.png"}
