@@ -362,7 +362,7 @@ export function Dashboard() {
 						</div>
 
 						<div className="lg:col-span-2">
-							<div className="relative flex xh-full md:min-h-[50vh] flex-col rounded-xl bg-muted/50 p-4">
+							<div className="relative flex xh-full xxmd:min-h-[50vh] flex-col rounded-xl bg-muted/50 p-4">
 								{/* <Badge variant="outline" className="absolute right-3 top-3">
 								Output
 							</Badge> */}
