@@ -15,8 +15,7 @@ This project provides a web-based GUI built with React for converting HDR images
 
 - **React**: Frontend library for building the user interface.
 - **Three.js**: 3D graphics library used for handling the cubemap generation and preview.
-- **HDRLoader**: Used to handle HDRI file loading and processing.
-- **Styled-Components**: For component-level styling in React.
+- **Tailwind CSS**: For styling.
 
 ## Installation
 
@@ -52,7 +51,7 @@ Ensure that you have the following installed:
    yarn dev
    ```
 
-4. Open your browser and go to `http://localhost:3000` to see the app.
+4. Open your browser and go to `http://localhost:5173` to see the app.
 
 ## Usage
 
@@ -105,7 +104,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-For any issues or feature requests, feel free to open an issue in the [GitHub Issues](https://github.com/yourusername/hdr-to-cubemap-web/issues) section.
+For any issues or feature requests, feel free to open an issue in the [GitHub Issues](https://github.com/hichemfantar/hdri-to-cubemap-converter/issues) section.
 
 ## Screenshots
 
@@ -122,4 +121,5 @@ Built with [React + TypeScript + Vite template](/vite.md).
 ## Credits
 
 Built by [Hichem Fantar](https://github.com/hichemfantar) using React and Three.js.
+
 Thanks [matheowis](https://github.com/matheowis/HDRI-to-CubeMap) for the inspiration.
