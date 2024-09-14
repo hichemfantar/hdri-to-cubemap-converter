@@ -164,12 +164,12 @@ export function Dashboard() {
 
 	const [cubeUpdated, setCubeUpdated] = useState(false);
 	const [showCanvas, setShowCanvas] = useState(false);
-
 	const [exposure, setExposureState] = useState(
 		(renderProps.exposure / renderProps.maxExposure) * 100
 	);
 	const [colorSpace, setColorSpaceState] = useState(renderProps.colorSpace);
 	const [activeTab, setActiveTab] = useState<tabType>("3d_view");
+
 	const handleTabChange = (value: tabType) => {
 		setActiveTab(value);
 		if (!cubeUpdated) {
