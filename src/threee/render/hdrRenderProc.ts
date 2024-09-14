@@ -1,5 +1,3 @@
-// @ts-nocheck
-
 import { Vector3 as V3 } from "three";
 import {
 	hdrProcRenderer,
@@ -77,7 +75,7 @@ const packBlobsSep = (callback = (href) => {}, progress = (prog) => {}) => {
 };
 
 const storeBlobsSep = (
-	name,
+	name: string,
 	callback = (href) => {},
 	progress = (prog) => {}
 ) => {

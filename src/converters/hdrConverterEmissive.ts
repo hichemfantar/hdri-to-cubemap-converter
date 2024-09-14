@@ -14,7 +14,7 @@ export const hdrConverterEmmisive = ({
 	fromBottom = true,
 }: Partial<Pick<MessageData, "rgbeBuffer" | "fromBottom">> &
 	Omit<MessageData, "rgbeBuffer" | "fromBottom">) => {
-	return new Promise((resolve) => {
+	return new Promise<Blob>((resolve) => {
 		const blobURL = URL.createObjectURL(
 			new Blob(["(", hadrEmmisiveWorker.toString(), ")()"], {
 				type: "application/javascript",
