@@ -176,7 +176,7 @@ export function SaveDialog({ className, ...props }: { className?: string }) {
 					Convert
 				</Button>
 			</DialogTrigger>
-			<DialogContent className="sm:max-w-[700px] overflow-scroll max-h-dvh">
+			<DialogContent className="sm:max-w-[700px] overflow-auto max-h-dvh">
 				<DialogHeader>
 					<DialogTitle>Chose Your Layout</DialogTitle>
 					<DialogDescription>
