@@ -47,18 +47,18 @@ import {
 	hdrToneMapping,
 	setColorSpace,
 	setExposure,
-} from "./threee/components/base";
+} from "./three-utils/components/base";
 import {
 	hdrToneMappingConv,
 	setColorSpaceConv,
 	setExposureConv,
 	updateConv,
-} from "./threee/components/convert";
-import { hdrToneMappingProc } from "./threee/components/process";
-import { imageProps, renderProps } from "./threee/components/props";
-import render from "./threee/render/render";
-import preview from "./threee/scenes/preview";
-import { updateImage } from "./threee/textures/userTexture";
+} from "./three-utils/components/convert";
+import { hdrToneMappingProc } from "./three-utils/components/process";
+import { imageProps, renderProps } from "./three-utils/components/props";
+import render from "./three-utils/render/render";
+import preview from "./three-utils/scenes/preview";
+import { updateImage } from "./three-utils/textures/userTexture";
 
 type tabType = "3d_view" | "cubemap_view";
 

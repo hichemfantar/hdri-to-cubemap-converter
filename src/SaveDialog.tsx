@@ -21,12 +21,12 @@ import {
 	hdrProcRenderSep,
 	hdrProcRenderUE4,
 	hdrProcRenderUnity,
-} from "./threee/render/hdrRenderProc";
+} from "./three-utils/render/hdrRenderProc";
 import {
 	procRenderSep,
 	procRenderUE4,
 	procRenderUnity,
-} from "./threee/render/renderProc";
+} from "./three-utils/render/renderProc";
 import { CopyCodeButton } from "./components/CopyCode";
 
 export function SaveDialog({ className, ...props }: { className?: string }) {
