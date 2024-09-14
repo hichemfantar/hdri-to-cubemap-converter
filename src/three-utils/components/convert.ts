@@ -92,6 +92,7 @@ const resizeConv = () => {
 		convRenderers.map((renderer) => {
 			if (renderer) {
 				renderer.setSize(w, w);
+				// console.log(renderer.domElement.clientHeight);
 			}
 		});
 	}

@@ -192,12 +192,12 @@ export function Dashboard() {
 	function ColorSpaceInput() {
 		return (
 			<div className="grid gap-3">
-				<Label htmlFor="model">Color Space (preview only)</Label>
+				<Label htmlFor="color-space">Color Space (preview only)</Label>
 				<Select
 					onValueChange={(v) => onColorSpaceChange(v as ColorSpace)}
 					value={colorSpace}
 				>
-					<SelectTrigger id="model">
+					<SelectTrigger id="color-space" aria-label={colorSpace}>
 						<SelectValue placeholder="Select a color space" />
 					</SelectTrigger>
 					<SelectContent>
@@ -318,6 +318,7 @@ export function Dashboard() {
 										"https://github.com/hichemfantar/hdri-to-cubemap-converter"
 									}
 									target="_blank"
+									aria-label="Star me on github"
 								>
 									<GitHubLogoIcon className={cn("w-5 h-5")} />
 								</a>

@@ -16,10 +16,15 @@ const FormatSelect = (props: {
 	const { onChange, value } = props;
 
 	return (
-		<div className="grid gap-2">
+		<div className="grid gap-2 flex-1">
 			<Label htmlFor="format">Format</Label>
 			<Select value={value} onValueChange={onChange}>
-				<SelectTrigger id="format" className="w-[180px]" name="format">
+				<SelectTrigger
+					id="format"
+					className=""
+					name="format"
+					aria-label={"format"}
+				>
 					<SelectValue placeholder="Select a format" />
 				</SelectTrigger>
 

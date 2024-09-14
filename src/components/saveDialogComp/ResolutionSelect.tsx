@@ -16,10 +16,15 @@ const ResolutionSelect = (props: {
 	const { onChange, value } = props;
 
 	return (
-		<div className="grid gap-2">
+		<div className="grid gap-2 flex-1">
 			<Label htmlFor="resolution">Face Resolution</Label>
 			<Select value={value.toString()} onValueChange={onChange}>
-				<SelectTrigger id="resolution" name="resolution" className="w-[180px]">
+				<SelectTrigger
+					id="resolution"
+					name="resolution"
+					className=""
+					aria-label={"resolution"}
+				>
 					<SelectValue placeholder="Select a resolution" />
 				</SelectTrigger>
 				<SelectContent>
