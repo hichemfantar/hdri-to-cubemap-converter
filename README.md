@@ -31,8 +31,8 @@ Ensure that you have the following installed:
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/yourusername/hdr-to-cubemap-web.git
-   cd hdr-to-cubemap-web
+   git clone https://github.com/hichemfantar/hdri-to-cubemap-converter.git
+   cd hdri-to-cubemap-converter
    ```
 
 2. Install the dependencies:
