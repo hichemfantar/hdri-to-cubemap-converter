@@ -91,6 +91,69 @@ function ExposureInput({
 	);
 }
 
+function ImageInput({
+	onChange,
+}: {
+	onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}) {
+	return (
+		<div>
+			<label
+				className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+				htmlFor="file_input"
+			>
+				Upload file
+			</label>
+			<Input
+				aria-describedby="file_input_help"
+				id="file_input"
+				type="file"
+				accept="image/*, .hdr"
+				onChange={onChange}
+			/>
+			<p
+				className="mt-1 text-sm text-gray-500 dark:text-gray-300"
+				id="file_input_help"
+			>
+				Accepted files: Images
+			</p>
+		</div>
+	);
+}
+
+function ColorSpaceInput({
+	onChange,
+	value,
+}: {
+	onChange: (v: ColorSpace) => void;
+	value: ColorSpace;
+}) {
+	return (
+		<div className="grid gap-3">
+			<Label htmlFor="color-space">Color Space (preview only)</Label>
+			<Select onValueChange={(v) => onChange(v as ColorSpace)} value={value}>
+				<SelectTrigger id="color-space" aria-label={value}>
+					<SelectValue placeholder="Select a color space" />
+				</SelectTrigger>
+				<SelectContent>
+					{(
+						[
+							"display-p3",
+							"display-p3-linear",
+							"srgb",
+							"srgb-linear",
+						] as ColorSpace[]
+					).map((val) => (
+						<SelectItem key={val} value={val}>
+							{val}
+						</SelectItem>
+					))}
+				</SelectContent>
+			</Select>
+		</div>
+	);
+}
+
 export function Dashboard() {
 	useEffect(() => {
 		preview();
@@ -101,7 +164,6 @@ export function Dashboard() {
 
 	const [cubeUpdated, setCubeUpdated] = useState(false);
 	const [showCanvas, setShowCanvas] = useState(false);
-	console.log(showCanvas);
 
 	const [exposure, setExposureState] = useState(
 		(renderProps.exposure / renderProps.maxExposure) * 100
@@ -176,71 +238,6 @@ export function Dashboard() {
 		setColorSpaceConv();
 	};
 
-	// const onExposureChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-	// 	const val = parseInt(e.target.value);
-	// 	setExposureState(val);
-	// 	renderProps.exposure = parseFloat(
-	// 		(val * (renderProps.maxExposure / 100)).toFixed(2)
-	// 	);
-	// 	setExposure();
-	// 	setExposureConv();
-	// };
-
-	function ColorSpaceInput() {
-		return (
-			<div className="grid gap-3">
-				<Label htmlFor="color-space">Color Space (preview only)</Label>
-				<Select
-					onValueChange={(v) => onColorSpaceChange(v as ColorSpace)}
-					value={colorSpace}
-				>
-					<SelectTrigger id="color-space" aria-label={colorSpace}>
-						<SelectValue placeholder="Select a color space" />
-					</SelectTrigger>
-					<SelectContent>
-						{(
-							[
-								"display-p3",
-								"display-p3-linear",
-								"srgb",
-								"srgb-linear",
-							] as ColorSpace[]
-						).map((val) => (
-							<SelectItem key={val} value={val}>
-								{val}
-							</SelectItem>
-						))}
-					</SelectContent>
-				</Select>
-			</div>
-		);
-	}
-
-	function ImageInput() {
-		return (
-			<div>
-				<label
-					className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-					htmlFor="file_input"
-				>
-					Upload file
-				</label>
-				<Input
-					aria-describedby="file_input_help"
-					id="file_input"
-					type="file"
-					accept="image/*, .hdr"
-					onChange={onFileUpload}
-				/>
-				<p
-					className="mt-1 text-sm text-gray-500 dark:text-gray-300"
-					id="file_input_help"
-				>
-					Accepted files: Images
-				</p>
-			</div>
-		);
-	}
 	return (
 		<TooltipProvider>
 			<div className="mx-auto container grid h-screen w-full xpl-[53px]">
@@ -274,9 +271,12 @@ export function Dashboard() {
 												<legend className="-ml-1 px-1 text-sm font-medium">
 													Settings
 												</legend>
-												<ImageInput />
+												<ImageInput onChange={onFileUpload} />
 
-												<ColorSpaceInput />
+												<ColorSpaceInput
+													value={colorSpace}
+													onChange={onColorSpaceChange}
+												/>
 
 												<ExposureInput
 													value={exposure}
@@ -334,9 +334,12 @@ export function Dashboard() {
 										Settings
 									</legend>
 
-									<ImageInput />
+									<ImageInput onChange={onFileUpload} />
 
-									<ColorSpaceInput />
+									<ColorSpaceInput
+										value={colorSpace}
+										onChange={onColorSpaceChange}
+									/>
 
 									<ExposureInput value={exposure} onChange={onExposureChange} />
 
