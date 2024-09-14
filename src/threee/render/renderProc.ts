@@ -1,5 +1,4 @@
-// @ts-nocheck
-
+import { BlobReader, BlobWriter, ZipWriter } from "@zip.js/zip.js";
 import { Vector3 as V3 } from "three";
 import { mainCamera, mainScene } from "../components/base";
 import { procCamera, procRenderer } from "../components/process";
@@ -34,43 +33,41 @@ const calcAngle = () => {
 	}
 };
 
-const packBlobsSep = (
-	callback = (href: any) => {},
-	progress = (prog: any) => {}
+const packBlobsSep = async (
+	callback: (href: string) => void,
+	progress: (prog: { progNow: number; progTotal: number }) => void
 ) => {
 	const { names, blobs } = renderCatch;
-	renderCatch.packed = [false, false, false, false, false, false];
-	console.log(blobs);
+	renderCatch.packed = Array(blobs.length).fill(false);
 
-	zip.createWriter(new zip.BlobWriter(), (writer: any) => {
-		const nester = (startIndex = 0, endIndex = 5, callback = () => {}) => {
-			console.log("startIndex0:", startIndex);
-			writer.add(
-				names[startIndex],
-				new zip.BlobReader(blobs[startIndex]),
-				() => {
-					renderCatch.packed[startIndex] = true;
-					console.log("startIndex:", startIndex);
+	// Create a BlobWriter to write the zip file
+	const zipFileWriter = new BlobWriter();
+	const zipWriter = new ZipWriter(zipFileWriter);
 
-					renderCatch.progNow++;
-					const { progNow, progTotal } = renderCatch;
-					progress({ progNow, progTotal });
+	// Function to recursively add blobs to the zip file
+	const addBlobs = async (index = 0) => {
+		if (index >= blobs.length) {
+			await zipWriter.close(); // Close the writer when done
+			const zipFileBlob = await zipFileWriter.getData(); // Retrieve the Blob
+			callback(URL.createObjectURL(zipFileBlob)); // Call the callback with the Blob URL
+			return;
+		}
 
-					if (startIndex >= endIndex) {
-						callback();
-					} else {
-						nester(startIndex + 1, endIndex, callback);
-					}
-				}
-			);
-		};
-		nester(0, 5, () => {
-			console.log(renderCatch.packed);
-			writer.close((blob: Blob) => {
-				callback(URL.createObjectURL(blob));
-			});
-		});
-	});
+		// Add a blob to the zip file
+		await zipWriter.add(names[index], new BlobReader(blobs[index]));
+		renderCatch.packed[index] = true;
+
+		// Update progress
+		renderCatch.progNow++;
+		const { progNow, progTotal } = renderCatch;
+		progress({ progNow, progTotal });
+
+		// Recursively process the next blob
+		await addBlobs(index + 1);
+	};
+
+	// Start adding blobs
+	await addBlobs();
 };
 
 const storeBlobsSep = (
@@ -80,7 +77,8 @@ const storeBlobsSep = (
 ) => {
 	procRenderer.domElement.toBlob((blob) => {
 		if (!blob) {
-			throw new Error("Blob not found");
+			console.error("Failed to create blob from canvas");
+			return;
 		}
 		renderCatch.blobs.push(blob);
 		renderCatch.names.push(`${name}.png`);
@@ -146,8 +144,8 @@ const procRenderSep = (
 
 const procRenderUnity = (
 	size = 64,
-	callback = (href: string) => {},
-	progress = (prog: { progNow: number; progTotal: number }) => {}
+	callback: (href: string) => void,
+	progress: (prog: { progNow: number; progTotal: number }) => void
 ) => {
 	renderCatch.progNow = 0;
 	renderCatch.progTotal = 4;
@@ -201,35 +199,65 @@ const procRenderUnity = (
 
 	// document.body.appendChild(canvas);
 	console.log("zip start");
-	canvas.toBlob((blob) => {
+
+	// Utility function to convert canvas to a Blob using a Promise
+	const canvasToBlob = (canvas: HTMLCanvasElement): Promise<Blob | null> => {
+		return new Promise((resolve) => {
+			canvas.toBlob(resolve, "image/png");
+		});
+	};
+
+	// Function to create a zip file from a canvas blob and handle progress and completion
+	const createZipFromCanvas = async () => {
+		console.log("zip start");
+
+		// Convert canvas to a Blob
+		const blob = await canvasToBlob(canvas);
+		if (!blob) {
+			console.error("Failed to create blob from canvas");
+			return;
+		}
 		console.log("blob created");
+
+		// Update progress
 		renderCatch.progNow++;
 		progress({
 			progNow: renderCatch.progNow,
 			progTotal: renderCatch.progTotal,
 		});
 
-		zip.createWriter(new zip.BlobWriter(), (writer: any) => {
-			writer.add("StandardCubeMap.png", new zip.BlobReader(blob), () => {
-				renderCatch.progNow++;
-				progress({
-					progNow: renderCatch.progNow,
-					progTotal: renderCatch.progTotal,
-				});
+		// Create a BlobWriter to write the zip file
+		const zipFileWriter = new BlobWriter();
+		const zipWriter = new ZipWriter(zipFileWriter);
 
-				writer.close((blob: any) => {
-					console.log("zip end");
-					renderCatch.progNow++;
-					progress({
-						progNow: renderCatch.progNow,
-						progTotal: renderCatch.progTotal,
-					});
+		// Add the canvas Blob as an entry in the zip file
+		await zipWriter.add("StandardCubeMap.png", new BlobReader(blob));
 
-					callback(URL.createObjectURL(blob));
-				});
-			});
+		// Update progress after adding the entry
+		renderCatch.progNow++;
+		progress({
+			progNow: renderCatch.progNow,
+			progTotal: renderCatch.progTotal,
 		});
-	});
+
+		// Close the zip writer and handle the resulting Blob
+		const zipFileBlob = await zipWriter.close();
+		console.log("zip end");
+
+		// Update progress after closing the writer
+		console.log(renderCatch.progNow, renderCatch.progTotal);
+
+		renderCatch.progNow++;
+		progress({
+			progNow: renderCatch.progNow,
+			progTotal: renderCatch.progTotal,
+		});
+
+		// Call the callback with the Blob URL
+		callback(URL.createObjectURL(zipFileBlob));
+	};
+
+	createZipFromCanvas();
 };
 
 const procRenderUE4 = (
@@ -295,7 +323,12 @@ const procRenderUE4 = (
 	progress({ progNow: renderCatch.progNow, progTotal: renderCatch.progTotal });
 
 	console.log("zip start");
-	canvas.toBlob((blob) => {
+	canvas.toBlob(async (blob) => {
+		if (!blob) {
+			console.error("Failed to create blob from canvas");
+			return;
+		}
+
 		console.log("blob created");
 		renderCatch.progNow++;
 		progress({
@@ -303,26 +336,27 @@ const procRenderUE4 = (
 			progTotal: renderCatch.progTotal,
 		});
 
-		zip.createWriter(new zip.BlobWriter(), (writer: any) => {
-			writer.add("StandardCubeMap.png", new zip.BlobReader(blob), () => {
-				renderCatch.progNow++;
-				progress({
-					progNow: renderCatch.progNow,
-					progTotal: renderCatch.progTotal,
-				});
+		// Create a BlobWriter to write the zip file
+		const zipFileWriter = new BlobWriter();
+		const zipWriter = new ZipWriter(zipFileWriter);
 
-				writer.close((blob: any) => {
-					console.log("zip end");
-					renderCatch.progNow++;
-					progress({
-						progNow: renderCatch.progNow,
-						progTotal: renderCatch.progTotal,
-					});
+		// Add a single entry to the zip file
+		await zipWriter.add("StandardCubeMap.png", new BlobReader(blob));
 
-					callback(URL.createObjectURL(blob));
-				});
-			});
-		});
+		// Update progress after adding the entry
+		renderCatch.progNow++;
+		const { progNow, progTotal } = renderCatch;
+		progress({ progNow, progTotal });
+
+		// Close the zip writer and handle the resulting Blob
+		const zipFileBlob = await zipWriter.close();
+		renderCatch.progNow++;
+		progress({ progNow: renderCatch.progNow, progTotal });
+
+		// Call the callback with the Blob URL
+		callback(URL.createObjectURL(zipFileBlob));
+
+		console.log("zip end");
 	});
 };
 
