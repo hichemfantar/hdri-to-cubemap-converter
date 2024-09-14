@@ -65,6 +65,32 @@ type tabType = "3d_view" | "cubemap_view";
 export const description =
 	"An AI playground with a sidebar navigation and a main content area. The playground has a header with a settings drawer and a share button. The sidebar has navigation links and a user menu. The main content area shows a form to configure the model and messages.";
 
+function ExposureInput({
+	value,
+	onChange,
+}: {
+	value: number;
+	onChange: (v: number) => void;
+}) {
+	return (
+		<div className="grid gap-3">
+			<Label htmlFor="exposure">
+				Exposure (preview only) ={" "}
+				{(value * (renderProps.maxExposure / 100)).toFixed(2)}
+			</Label>
+			<Slider
+				id="exposure"
+				value={[value]}
+				min={0}
+				max={100}
+				step={1}
+				onValueChange={(e) => onChange(e[0])}
+				className="w-full"
+			/>
+		</div>
+	);
+}
+
 export function Dashboard() {
 	useEffect(() => {
 		preview();
@@ -134,11 +160,10 @@ export function Dashboard() {
 		}
 	};
 
-	const onExposureChange = (v: number[]) => {
-		const val = v[0];
-		setExposureState(val);
+	const onExposureChange = (v: number) => {
+		setExposureState(v);
 		renderProps.exposure = parseFloat(
-			(val * (renderProps.maxExposure / 100)).toFixed(2)
+			(v * (renderProps.maxExposure / 100)).toFixed(2)
 		);
 		setExposure();
 		setExposureConv();
@@ -160,34 +185,6 @@ export function Dashboard() {
 	// 	setExposure();
 	// 	setExposureConv();
 	// };
-
-	function ExposureInput() {
-		return (
-			<div className="grid gap-3">
-				<Label htmlFor="exposure">
-					Exposure (preview only) ={" "}
-					{(exposure * (renderProps.maxExposure / 100)).toFixed(2)}
-				</Label>
-				<Slider
-					id="exposure"
-					value={[exposure]}
-					min={0}
-					max={100}
-					step={1}
-					onValueChange={onExposureChange}
-					className="w-full"
-				/>
-				{/* <input
-						type="range"
-						min="0"
-						max="100"
-						value={exposure}
-						onChange={onExposureChange}
-						className="w-full"
-					/> */}
-			</div>
-		);
-	}
 
 	function ColorSpaceInput() {
 		return (
@@ -281,7 +278,10 @@ export function Dashboard() {
 
 												<ColorSpaceInput />
 
-												<ExposureInput />
+												<ExposureInput
+													value={exposure}
+													onChange={onExposureChange}
+												/>
 
 												{/* <div className="grid gap-3">
 											<Label htmlFor="temperature">Temperature</Label>
@@ -338,7 +338,7 @@ export function Dashboard() {
 
 									<ColorSpaceInput />
 
-									<ExposureInput />
+									<ExposureInput value={exposure} onChange={onExposureChange} />
 
 									{/* <div className="grid gap-3">
 										<Label htmlFor="temperature">Temperature</Label>
