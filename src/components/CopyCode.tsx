@@ -12,11 +12,10 @@ import {
 	DialogTrigger,
 } from "@/components/ui/dialog";
 
-const exampleCode = `
-<Environment
-	background
-	files={
-			[
+const exampleCode = `<Environment
+		background
+		files={
+				[
 					"/cubemap/px.png",
 					"/cubemap/nx.png",
 					"/cubemap/py.png",
@@ -24,8 +23,8 @@ const exampleCode = `
 					"/cubemap/pz.png",
 					"/cubemap/nz.png",
 			]
-	}
-/>
+		}
+	/>
 `;
 
 export function CopyCodeButton({
