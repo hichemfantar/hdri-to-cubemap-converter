@@ -9,7 +9,6 @@ import {
 	SquareUser,
 	Triangle,
 } from "lucide-react";
-
 import { Button } from "@/components/ui/button";
 import {
 	Drawer,
@@ -247,7 +246,7 @@ export function Dashboard() {
 						<div>
 							<h1 className="text-xl font-semibold">
 								HDRI to Cubemap{" "}
-								<span className="hidden md:inline">Converter</span>{" "}
+								<span className="hidden md:inline">Converter</span>
 							</h1>
 						</div>
 						<div className="flex items-center flex-wrap gap-1">
@@ -372,11 +371,9 @@ export function Dashboard() {
 								<div className="flex-1">
 									<Tabs
 										value={activeTab}
-										// className="w-[400px]"
 										onValueChange={(v) => {
 											handleTabChange(v as tabType);
 										}}
-										// className="h-full"
 									>
 										<TabsList className="grid w-full grid-cols-2">
 											<TabsTrigger value="3d_view">3D View</TabsTrigger>
@@ -388,7 +385,6 @@ export function Dashboard() {
 											forceMount
 											value="3d_view"
 											hidden={activeTab !== "3d_view"}
-											// className="h-full"
 										>
 											<canvas id={"MainCanvas"} className="w-full rounded-md" />
 										</TabsContent>
