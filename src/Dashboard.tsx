@@ -36,12 +36,12 @@ import {
 import { GitHubLogoIcon } from "@radix-ui/react-icons";
 import React, { useEffect, useState } from "react";
 import { ColorSpace } from "three";
-import { ModeToggle } from "./components/mode-toggle";
+import { ModeToggle } from "./components/theme/mode-toggle";
 import { Slider } from "./components/ui/slider";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./components/ui/tabs";
-import { GridRender } from "./GridRender";
+import { CubemapRender } from "./CubemapRender";
 import { cn } from "./lib/utils";
-import { ProcessDialog } from "./SaveDialog";
+import { ExportDialog } from "./ExportDialog";
 import {
 	hdrToneMapping,
 	setColorSpace,
@@ -55,8 +55,8 @@ import {
 } from "./three-utils/components/convert";
 import { hdrToneMappingProc } from "./three-utils/components/process";
 import { imageProps, renderProps } from "./three-utils/components/props";
-import render from "./three-utils/render/render";
-import preview from "./three-utils/scenes/preview";
+import { render } from "./three-utils/render/render";
+import { preview } from "./three-utils/scenes/preview";
 import { updateImage } from "./three-utils/textures/userTexture";
 
 type tabType = "3d_view" | "cubemap_view";
@@ -358,7 +358,7 @@ export function Dashboard() {
 										</div>
 									</div> */}
 
-									<ProcessDialog className="w-full" />
+									<ExportDialog className="w-full" />
 								</fieldset>
 							</form>
 						</div>
@@ -393,7 +393,7 @@ export function Dashboard() {
 											value="cubemap_view"
 											hidden={activeTab !== "cubemap_view"}
 										>
-											<GridRender />
+											<CubemapRender />
 										</TabsContent>
 									</Tabs>
 								</div>

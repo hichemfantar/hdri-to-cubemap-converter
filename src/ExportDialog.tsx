@@ -10,11 +10,11 @@ import {
 } from "@/components/ui/dialog";
 import { CogIcon, Pencil, SaveIcon } from "lucide-react";
 import { useState } from "react";
-import { CrossLayout } from "./components/saveDialogComp/CrossLayout";
-import { FormatSelect } from "./components/saveDialogComp/FormatSelect";
-import { LineLayout } from "./components/saveDialogComp/LineLayout";
-import { ResolutionSelect } from "./components/saveDialogComp/ResolutionSelect";
-import { SeparateLayout } from "./components/saveDialogComp/SeparateLayout";
+import { CrossLayout } from "./components/export-settings/CrossLayout";
+import { FormatSelect } from "./components/export-settings/FormatSelect";
+import { LineLayout } from "./components/export-settings/LineLayout";
+import { ResolutionSelect } from "./components/export-settings/ResolutionSelect";
+import { SeparateLayout } from "./components/export-settings/SeparateLayout";
 import { Progress } from "./components/ui/progress";
 import { cn } from "./lib/utils";
 import {
@@ -31,7 +31,7 @@ import { CopyCodeButton } from "./components/CopyCode";
 
 type Selection = "cross" | "line" | "separate";
 
-export function ProcessDialog({ className, ...props }: { className?: string }) {
+export function ExportDialog({ className, ...props }: { className?: string }) {
 	return (
 		<Dialog>
 			<DialogTrigger asChild>
@@ -174,10 +174,10 @@ function Content() {
 	return (
 		<>
 			<DialogHeader>
-				<DialogTitle>Chose Your Layout</DialogTitle>
-				<DialogDescription>
+				<DialogTitle>Export Settings</DialogTitle>
+				{/* <DialogDescription>
 					There are 3 layouts available (Cross, Line, and Separate).
-				</DialogDescription>
+				</DialogDescription> */}
 			</DialogHeader>
 			<div className="grid gap-4 py-4">
 				<div className="flex gap-4 items-center">

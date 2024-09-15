@@ -1,4 +1,4 @@
-export function GridRender() {
+export function CubemapRender() {
 	function Cube() {
 		return <div className="h-32 w-32"></div>;
 	}

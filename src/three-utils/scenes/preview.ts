@@ -16,4 +16,4 @@ const preview = () => {
 	// mainScene.add(testCube);
 };
 
-export default preview;
+export { preview };
