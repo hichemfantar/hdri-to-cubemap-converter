@@ -114,6 +114,9 @@ For any issues or feature requests, feel free to open an issue in the [GitHub Is
 ![Cubemap Preview](screenshots/cubemap-view.png)
 *Cubemap face preview after HDRI conversion.*
 
+![Export Settings](screenshots/export-view.png)
+*Export settings.*
+
 ## Built with Vite
 
 Built with [React + TypeScript + Vite template](/vite.md).
