@@ -43,7 +43,7 @@ export function CopyCodeButton({
 		<>
 			<Dialog>
 				<DialogTrigger asChild>
-					<Button className={cn("hidden md:flex", className)} {...props}>
+					<Button className={cn("flex", className)} {...props}>
 						Copy code
 					</Button>
 				</DialogTrigger>
