@@ -29,41 +29,55 @@ import {
 } from "./three-utils/render/renderProc";
 import { CopyCodeButton } from "./components/CopyCode";
 
-export function SaveDialog({ className, ...props }: { className?: string }) {
-	const [selected, setSelected] = useState(0);
-	const [url, setUrl] = useState("");
-	const [download, setDownload] = useState("");
-	const [processed, setProcessed] = useState(false);
+type Selection = "cross" | "line" | "separate";
+
+export function ProcessDialog({ className, ...props }: { className?: string }) {
+	return (
+		<Dialog>
+			<DialogTrigger asChild>
+				<Button className={cn("gap-1.5 text-sm", className)} {...props}>
+					<Pencil className="size-3.5" />
+					Convert
+				</Button>
+			</DialogTrigger>
+			<DialogContent className="sm:max-w-[700px] overflow-auto max-h-dvh">
+				<Content />
+			</DialogContent>
+		</Dialog>
+	);
+}
+
+function Content() {
+	const [exportMode, setExportMode] = useState<Selection>("cross");
+	const [url, setUrl] = useState<string | null>(null);
+	const [downloadName, setDownloadName] = useState("");
 	const [progress, setProgress] = useState(0);
-	const [saveDisable, setSaveDisable] = useState(false);
-	const [resolution, setResolution] = useState(256);
-	const [format, setFormat] = useState("png");
+	const [isProcessing, setIsProcessing] = useState(false);
+	const [faceResolution, setFaceResolution] = useState(256);
+	const [fileFormat, setFileFormat] = useState("png");
 
 	const proccessFiles = () => {
-		console.log("saving files - index =", selected);
-		setSaveDisable(true);
+		setIsProcessing(true);
 
-		if (format === "hdr") {
+		if (fileFormat === "hdr") {
 			hdrProccess((href: string) => {
 				setUrl(href);
-				setDownload("Standard-Cube-Map.zip");
-				setProcessed(true);
-				setSaveDisable(false);
+				setDownloadName("Standard-Cube-Map.zip");
+				setIsProcessing(false);
 			});
 		} else {
 			regularProccess((href: string) => {
 				setUrl(href);
-				setDownload("Standard-Cube-Map.zip");
-				setProcessed(true);
-				setSaveDisable(false);
+				setDownloadName("Standard-Cube-Map.zip");
+				setIsProcessing(false);
 			});
 		}
 	};
 
 	const hdrProccess = (callback: (href: string) => void) => {
-		if (selected === 1) {
+		if (exportMode === "cross") {
 			hdrProcRenderUnity(
-				resolution,
+				faceResolution,
 				(href) => {
 					callback(href);
 				},
@@ -73,9 +87,9 @@ export function SaveDialog({ className, ...props }: { className?: string }) {
 				}
 			);
 		}
-		if (selected === 2) {
+		if (exportMode === "line") {
 			hdrProcRenderUE4(
-				resolution,
+				faceResolution,
 				(href) => {
 					callback(href);
 				},
@@ -85,9 +99,9 @@ export function SaveDialog({ className, ...props }: { className?: string }) {
 				}
 			);
 		}
-		if (selected === 3) {
+		if (exportMode === "separate") {
 			hdrProcRenderSep(
-				resolution,
+				faceResolution,
 				(href) => {
 					callback(href);
 				},
@@ -100,9 +114,9 @@ export function SaveDialog({ className, ...props }: { className?: string }) {
 	};
 
 	const regularProccess = (callback: (href: string) => void) => {
-		if (selected === 1) {
+		if (exportMode === "cross") {
 			procRenderUnity(
-				resolution,
+				faceResolution,
 				(href) => {
 					callback(href);
 				},
@@ -112,9 +126,9 @@ export function SaveDialog({ className, ...props }: { className?: string }) {
 				}
 			);
 		}
-		if (selected === 2) {
+		if (exportMode === "line") {
 			procRenderUE4(
-				resolution,
+				faceResolution,
 				(href) => {
 					callback(href);
 				},
@@ -124,9 +138,9 @@ export function SaveDialog({ className, ...props }: { className?: string }) {
 				}
 			);
 		}
-		if (selected === 3) {
+		if (exportMode === "separate") {
 			procRenderSep(
-				resolution,
+				faceResolution,
 				(href) => {
 					callback(href);
 				},
@@ -138,99 +152,88 @@ export function SaveDialog({ className, ...props }: { className?: string }) {
 		}
 	};
 
-	const saveFiles = () => {
-		onClose();
-	};
-
-	const handleSelect = (index: number) => {
-		console.log("works", index);
-		setSelected(index);
+	const handleSelect = (value: Selection) => {
+		setExportMode(value);
 	};
 
 	const onResolutionChange = (value: string) => {
-		setResolution(parseInt(value));
+		setFaceResolution(parseInt(value));
 	};
 
 	const onFormatChange = (value: string) => {
-		setFormat(value);
+		setFileFormat(value);
 	};
 
-	const onClose = () => {
+	const resetState = () => {
 		setUrl("");
-		setDownload("");
-		setProcessed(false);
-		setSaveDisable(false);
+		setDownloadName("");
+		setIsProcessing(false);
 		setProgress(0);
 	};
 
 	return (
-		<Dialog>
-			<DialogTrigger asChild>
-				<Button
-					// variant="outline"
-					// size="sm"
-					className={cn("gap-1.5 text-sm", className)}
-					{...props}
-				>
-					<Pencil className="size-3.5" />
-					Convert
-				</Button>
-			</DialogTrigger>
-			<DialogContent className="sm:max-w-[700px] overflow-auto max-h-dvh">
-				<DialogHeader>
-					<DialogTitle>Chose Your Layout</DialogTitle>
-					<DialogDescription>
-						There are 3 layouts available (Cross, Line, and Separate).
-					</DialogDescription>
-				</DialogHeader>
-				<div className="grid gap-4 py-4">
-					<div className="flex gap-4 items-center">
-						<ResolutionSelect
-							onChange={(e) => onResolutionChange(e)}
-							value={resolution}
-						/>
-						<FormatSelect onChange={(e) => onFormatChange(e)} value={format} />
-					</div>
-					<CrossLayout selected={selected} onClick={() => handleSelect(1)} />
-					<LineLayout selected={selected} onClick={() => handleSelect(2)} />
-					<SeparateLayout selected={selected} onClick={() => handleSelect(3)} />
+		<>
+			<DialogHeader>
+				<DialogTitle>Chose Your Layout</DialogTitle>
+				<DialogDescription>
+					There are 3 layouts available (Cross, Line, and Separate).
+				</DialogDescription>
+			</DialogHeader>
+			<div className="grid gap-4 py-4">
+				<div className="flex gap-4 items-center">
+					<ResolutionSelect
+						onChange={(e) => onResolutionChange(e)}
+						value={faceResolution}
+					/>
+					<FormatSelect
+						onChange={(e) => onFormatChange(e)}
+						value={fileFormat}
+					/>
 				</div>
-				<Progress value={progress} />
-				<DialogFooter>
-					<CopyCodeButton variant={"outline"} />
+				<CrossLayout
+					selected={exportMode === "cross"}
+					onClick={() => handleSelect("cross")}
+				/>
+				<LineLayout
+					selected={exportMode === "line"}
+					onClick={() => handleSelect("line")}
+				/>
+				<SeparateLayout
+					selected={exportMode === "separate"}
+					onClick={() => handleSelect("separate")}
+				/>
+			</div>
+			<Progress value={progress} />
+			<DialogFooter>
+				<CopyCodeButton variant={"outline"} />
 
-					{processed ? (
-						<Button
-							asChild
-							variant="default"
-							color="primary"
-							disabled={selected === 0 || saveDisable}
-							onClick={saveFiles}
-							className="gap-1.5 text-sm"
-						>
-							<a href={url} download={download}>
-								<SaveIcon className={cn("size-3.5")} />
-								Save
-							</a>
-						</Button>
-					) : (
-						<Button
-							variant="default"
-							disabled={selected === 0 || saveDisable}
-							onClick={proccessFiles}
-							// size="sm"
-							className="gap-1.5 text-sm"
-						>
-							<CogIcon
-								className={cn("size-3.5", saveDisable && "animate-spin")}
-							/>
-							Process
-						</Button>
-					)}
-
-					{/* <Button type="submit">Save changes</Button> */}
-				</DialogFooter>
-			</DialogContent>
-		</Dialog>
+				{url ? (
+					<Button
+						asChild
+						variant="default"
+						color="primary"
+						disabled={isProcessing}
+						className="gap-1.5 text-sm"
+					>
+						<a href={url} download={downloadName}>
+							<SaveIcon className={cn("size-3.5")} />
+							Download
+						</a>
+					</Button>
+				) : null}
+				<Button
+					variant="default"
+					disabled={isProcessing}
+					onClick={() => {
+						resetState();
+						proccessFiles();
+					}}
+					className="gap-1.5 text-sm"
+				>
+					<CogIcon className={cn("size-3.5", isProcessing && "animate-spin")} />
+					Process
+				</Button>
+			</DialogFooter>
+		</>
 	);
 }

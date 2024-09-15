@@ -9,6 +9,7 @@ import { imageProps } from "../components/props";
 import { RGBELoader } from "../examples/RGBELoader";
 import { updateSphereMap } from "../materials/sphereMat";
 import { HdrTexture } from "./iniHdrTexture";
+
 const userTexture = new Texture();
 
 userTexture.minFilter = NearestFilter;

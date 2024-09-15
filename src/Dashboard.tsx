@@ -41,7 +41,7 @@ import { Slider } from "./components/ui/slider";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./components/ui/tabs";
 import { GridRender } from "./GridRender";
 import { cn } from "./lib/utils";
-import { SaveDialog } from "./SaveDialog";
+import { ProcessDialog } from "./SaveDialog";
 import {
 	hdrToneMapping,
 	setColorSpace,
@@ -358,7 +358,7 @@ export function Dashboard() {
 										</div>
 									</div> */}
 
-									<SaveDialog className="w-full" />
+									<ProcessDialog className="w-full" />
 								</fieldset>
 							</form>
 						</div>
