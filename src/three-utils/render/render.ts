@@ -24,4 +24,4 @@ const eventTick = () => {
 	}
 };
 
-export default render;
+export { render };
