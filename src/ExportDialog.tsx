@@ -8,7 +8,13 @@ import {
 	DialogTitle,
 	DialogTrigger,
 } from "@/components/ui/dialog";
-import { CogIcon, Pencil, SaveIcon } from "lucide-react";
+import {
+	CogIcon,
+	FileDown,
+	Pencil,
+	SaveIcon,
+	Settings2Icon,
+} from "lucide-react";
 import { useState } from "react";
 import { CrossLayout } from "./components/export-settings/CrossLayout";
 import { FormatSelect } from "./components/export-settings/FormatSelect";
@@ -28,6 +34,8 @@ import {
 	procRenderUnity,
 } from "./three-utils/render/renderProc";
 import { CopyCodeButton } from "./components/CopyCode";
+import { toast } from "./hooks/use-toast";
+import { ToastAction } from "./components/ui/toast";
 
 type Selection = "cross" | "line" | "separate";
 
@@ -36,8 +44,8 @@ export function ExportDialog({ className, ...props }: { className?: string }) {
 		<Dialog>
 			<DialogTrigger asChild>
 				<Button className={cn("gap-1.5 text-sm", className)} {...props}>
-					<Pencil className="size-3.5" />
-					Convert
+					<Settings2Icon className="size-3.5" />
+					Export Settings
 				</Button>
 			</DialogTrigger>
 			<DialogContent className="sm:max-w-[700px] overflow-auto max-h-dvh">
@@ -64,12 +72,36 @@ function Content() {
 				setUrl(href);
 				setDownloadName("Standard-Cube-Map.zip");
 				setIsProcessing(false);
+				toast({
+					title: "Conversion complete",
+					description: "File is ready for download",
+					action: href ? (
+						<ToastAction altText="Try again" asChild className="gap-1">
+							<a href={href} download={downloadName}>
+								<FileDown className={cn("size-3.5")} />
+								Download
+							</a>
+						</ToastAction>
+					) : undefined,
+				});
 			});
 		} else {
 			regularProccess((href: string) => {
 				setUrl(href);
 				setDownloadName("Standard-Cube-Map.zip");
 				setIsProcessing(false);
+				toast({
+					title: "Conversion complete",
+					description: "File is ready for download",
+					action: href ? (
+						<ToastAction altText="Try again" asChild className="gap-1">
+							<a href={href} download={downloadName}>
+								<FileDown className={cn("size-3.5")} />
+								Download
+							</a>
+						</ToastAction>
+					) : undefined,
+				});
 			});
 		}
 	};
@@ -216,7 +248,7 @@ function Content() {
 						className="gap-1.5 text-sm"
 					>
 						<a href={url} download={downloadName}>
-							<SaveIcon className={cn("size-3.5")} />
+							<FileDown className={cn("size-3.5")} />
 							Download
 						</a>
 					</Button>
@@ -231,7 +263,7 @@ function Content() {
 					className="gap-1.5 text-sm"
 				>
 					<CogIcon className={cn("size-3.5", isProcessing && "animate-spin")} />
-					Process
+					Convert
 				</Button>
 			</DialogFooter>
 		</>
