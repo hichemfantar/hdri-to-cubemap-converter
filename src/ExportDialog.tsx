@@ -77,7 +77,7 @@ function Content() {
 					description: "File is ready for download",
 					action: href ? (
 						<ToastAction altText="Try again" asChild className="gap-1">
-							<a href={href} download={downloadName}>
+							<a href={href} download={"Standard-Cube-Map.zip"}>
 								<FileDown className={cn("size-3.5")} />
 								Download
 							</a>
@@ -95,7 +95,7 @@ function Content() {
 					description: "File is ready for download",
 					action: href ? (
 						<ToastAction altText="Try again" asChild className="gap-1">
-							<a href={href} download={downloadName}>
+							<a href={href} download={"Standard-Cube-Map.zip"}>
 								<FileDown className={cn("size-3.5")} />
 								Download
 							</a>
