@@ -46,7 +46,7 @@ const updateConv = () => {
 
 	// convProps.refs.push(convCanv);
 	if (convProps.hdrToon) {
-		convRenderers.map((renderer) => {
+		convRenderers.forEach((renderer) => {
 			if (renderer) {
 				renderer.toneMapping = ReinhardToneMapping;
 				renderer.toneMappingExposure = 4;
@@ -54,7 +54,7 @@ const updateConv = () => {
 			}
 		});
 	} else {
-		convRenderers.map((renderer) => {
+		convRenderers.forEach((renderer) => {
 			if (renderer) {
 				renderer.toneMapping = LinearToneMapping;
 				renderer.toneMappingExposure = 1;
@@ -89,7 +89,7 @@ const resizeConv = () => {
 		// if (convProps.refs[6]) convProps.refs[6].style.width = `${segSize * 4}px`;
 		// if (convProps.refs[6]) convProps.refs[6].style.height = `${segSize * 3}px`;
 
-		convRenderers.map((renderer) => {
+		convRenderers.forEach((renderer) => {
 			if (renderer) {
 				renderer.setSize(w, w);
 				// console.log(renderer.domElement.clientHeight);
@@ -131,13 +131,13 @@ const convRender = () => {
 };
 
 const setExposureConv = (val = renderProps.exposure) => {
-	convRenderers.map((renderer) => {
+	convRenderers.forEach((renderer) => {
 		if (renderer) renderer.toneMappingExposure = val;
 	});
 };
 
 const setColorSpaceConv = (val = renderProps.colorSpace) => {
-	convRenderers.map((renderer) => {
+	convRenderers.forEach((renderer) => {
 		if (renderer) renderer.outputColorSpace = val;
 	});
 };
@@ -145,14 +145,14 @@ const setColorSpaceConv = (val = renderProps.colorSpace) => {
 const hdrToneMappingConv = (hdr = true) => {
 	convProps.hdrToon = hdr;
 	if (hdr) {
-		convRenderers.map((renderer) => {
+		convRenderers.forEach((renderer) => {
 			if (renderer) {
 				renderer.toneMapping = ReinhardToneMapping;
 				renderer.toneMappingExposure = 4;
 			}
 		});
 	} else {
-		convRenderers.map((renderer) => {
+		convRenderers.forEach((renderer) => {
 			if (renderer) {
 				renderer.toneMapping = LinearToneMapping;
 				renderer.toneMappingExposure = 1;

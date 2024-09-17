@@ -31,8 +31,8 @@ export const hadrEmmisiveWorker = () => {
 		// calculates repetitions in line for given channel
 		const getLine = (y = 0, channel = 0) => {
 			const array = [];
-			let localVal = 0,
-				localLength = 0;
+			let localVal = 0;
+			let localLength = 0;
 			const lengthConstant = 128;
 			for (let i = 0; i < width * 4; i += 4) {
 				if (localLength === 0) {
@@ -78,7 +78,7 @@ export const hadrEmmisiveWorker = () => {
 			// Each line starts the same
 			byteData.push(2, 2, lineSize[1], lineSize[0]); //line iniciators // no idea why but linesize is flipped
 			for (let k = 0; k < 4; k++) {
-				compressed[i][k].map((channel) => {
+				compressed[i][k].forEach((channel) => {
 					byteData.push(channel.length, channel.value);
 				});
 			}
