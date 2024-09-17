@@ -106,7 +106,8 @@ function ImageInput({
 				aria-describedby="file_input_help"
 				id="file_input"
 				type="file"
-				accept="image/*, .hdr"
+				accept=".png, .jpeg, .jpg, .hdr"
+				// accept="image/*, .hdr"
 				onChange={onChange}
 			/>
 			<p
