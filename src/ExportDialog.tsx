@@ -209,9 +209,7 @@ function Content() {
 		<>
 			<DialogHeader>
 				<DialogTitle>Export Settings</DialogTitle>
-				{/* <DialogDescription>
-					There are 3 layouts available (Cross, Line, and Separate).
-				</DialogDescription> */}
+				<DialogDescription>Configure your export settings</DialogDescription>
 			</DialogHeader>
 			<div className="grid gap-4 py-4">
 				<div className="flex gap-4 items-center">
