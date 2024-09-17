@@ -185,7 +185,7 @@ export function Dashboard() {
 
 		const file = e.target.files[0];
 		const format = file.name.split(".").slice(-1)[0];
-		const formats = ["png", "jpg", "hdr"];
+		const formats = ["png", "jpg", "jpeg", "hdr"];
 
 		if (formats.includes(format)) {
 			// console.log(`File Accepted (${file.name.split(".").slice(-1)[0]})`);
@@ -210,6 +210,7 @@ export function Dashboard() {
 				toast({
 					title: "File uploaded",
 					description: "File is ready for preview",
+					duration: 2000,
 				});
 			});
 		} else {

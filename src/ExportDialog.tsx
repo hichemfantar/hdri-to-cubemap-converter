@@ -83,6 +83,7 @@ function Content() {
 							</a>
 						</ToastAction>
 					) : undefined,
+					duration: 2000,
 				});
 			});
 		} else {
@@ -101,6 +102,7 @@ function Content() {
 							</a>
 						</ToastAction>
 					) : undefined,
+					duration: 2000,
 				});
 			});
 		}
