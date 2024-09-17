@@ -1,4 +1,4 @@
-import { hadrEmmisiveWorker } from "../workers/hdrEmissive.worker";
+import { hadrEmmisiveWorker } from "./hdrEmissive";
 
 export type MessageData = {
 	width: number;
