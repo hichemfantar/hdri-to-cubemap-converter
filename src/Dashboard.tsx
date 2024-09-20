@@ -73,12 +73,11 @@ function ExposureInput({
 }) {
 	return (
 		<div className="grid gap-3">
-			<Label htmlFor="exposure">
+			<Label>
 				Exposure (preview only) ={" "}
 				{(value * (renderProps.maxExposure / 100)).toFixed(2)}
 			</Label>
 			<Slider
-				id="exposure"
 				value={[value]}
 				min={0}
 				max={100}
@@ -107,7 +106,8 @@ function ImageInput({
 				aria-describedby="file_input_help"
 				id="file_input"
 				type="file"
-				accept="image/*, .hdr"
+				accept=".png, .jpeg, .jpg, .hdr"
+				// accept="image/*, .hdr"
 				onChange={onChange}
 			/>
 			<p

@@ -72,8 +72,8 @@ const packBlobsSep = async (
 
 const storeBlobsSep = (
 	name: string,
-	callback = (href: string) => {},
-	progress = (prog: { progNow: number; progTotal: number }) => {}
+	callback: (href: string) => void,
+	progress: (prog: { progNow: number; progTotal: number }) => void
 ) => {
 	procRenderer.domElement.toBlob((blob) => {
 		if (!blob) {
@@ -94,8 +94,8 @@ const storeBlobsSep = (
 
 const procRenderSep = (
 	size = 64,
-	callback = (href: string) => {},
-	progress = (prog: { progNow: number; progTotal: number }) => {}
+	callback: (href: string) => void,
+	progress: (prog: { progNow: number; progTotal: number }) => void
 ) => {
 	renderCatch.blobs = [];
 	renderCatch.names = [];
@@ -262,8 +262,8 @@ const procRenderUnity = (
 
 const procRenderUE4 = (
 	size = 64,
-	callback = (href: string) => {},
-	progress = (prog: { progNow: number; progTotal: number }) => {}
+	callback: (href: string) => void,
+	progress: (prog: { progNow: number; progTotal: number }) => void
 ) => {
 	renderCatch.progNow = 0;
 	renderCatch.progTotal = 4;
